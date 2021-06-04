@@ -1,0 +1,116 @@
+name: test cycle line
+code: |
+  cycle(line())
+expected: |
+  <g >
+    <g transform="rotate(0.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(20.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(40.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(60.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(80.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(100.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(120.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(140.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(160.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(180.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(200.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(220.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(240.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(260.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(280.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(300.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(320.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(340.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+  </g>
+---
+name: test cycle line with n=3
+code: |
+  cycle(line(), n=3)
+expected: |
+  <g >
+    <g transform="rotate(0.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(120.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(240.0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+  </g>
+---
+name: test cycle line with angle
+code: |
+  cycle(line(), n=3, angle=30)
+expected: |
+  <g >
+    <g transform="rotate(0 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(30 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+    <g transform="rotate(60 0 0)">
+      <line x1="-100" y1="0" x2="100" y2="0" />
+    </g>
+  </g>
+
+---
+name: test cycle line with scale
+code: |
+  cycle(line(), n=3, s=0.5)
+expected: |
+  <g >
+    <g transform="scale(1.0 1.0)">
+      <g transform="rotate(0.0 0 0)">
+        <line x1="-100" y1="0" x2="100" y2="0" />
+      </g>
+    </g>
+    <g transform="scale(0.5 0.5)">
+      <g transform="rotate(120.0 0 0)">
+        <line x1="-100" y1="0" x2="100" y2="0" />
+      </g>
+    </g>
+    <g transform="scale(0.25 0.25)">
+      <g transform="rotate(240.0 0 0)">
+        <line x1="-100" y1="0" x2="100" y2="0" />
+      </g>
+    </g>
+  </g>
+

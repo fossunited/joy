@@ -1,0 +1,54 @@
+name: test circle
+code: |
+  circle()
+expected: |
+  <circle cx="0" cy="0" r="100" />
+---
+name: test circle with attrs
+code: |
+  circle(cx=100, cy=200, r=50)
+expected: |
+  <circle cx="100" cy="200" r="50" />
+---
+name: test circle with stroke and fill
+code: |
+  circle(cx=100, cy=200, r=50, stroke="black", fill="green")
+expected: |
+  <circle cx="100" cy="200" r="50" stroke="black" fill="green" />
+---
+name: test rect
+code: |
+  rect()
+expected: |
+  <rect x="-100.0" y="-100.0" width="200" height="200" />
+---
+name: test rect with attrs
+code: |
+  rect(x=10, y=20, width=30, height=40)
+expected: |
+  <rect x="10" y="20" width="30" height="40" />
+---
+name: test rect with stroke and fill
+code: |
+  rect(x=10, y=20, width=30, height=40, stroke="black", fill="green")
+expected: |
+  <rect x="10" y="20" width="30" height="40" stroke="black" fill="green" />
+
+---
+name: test line
+code: |
+  line()
+expected: |
+  <line x1="-100" y1="0" x2="100" y2="0" />
+---
+name: test line with attrs
+code: |
+  line(x1=10, y1=20, x2=30, y2=40)
+expected: |
+  <line x1="10" y1="20" x2="30" y2="40" />
+---
+name: test line with stroke
+code: |
+  line(x1=10, y1=20, x2=30, y2=40, stroke="red")
+expected: |
+  <line x1="10" y1="20" x2="30" y2="40" stroke="red" />
