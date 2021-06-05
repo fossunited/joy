@@ -173,16 +173,7 @@ class Shape:
               <circle cx="100" cy="100" r="50" />
             </svg>
         """
-        svg_header = render_tag(
-            tag="svg",
-            width=width,
-            height=height,
-            viewBox=f"-{width//2} -{height//2} {width} {height}",
-            fill="none",
-            stroke="black",
-            xmlns="http://www.w3.org/2000/svg") + "\n"
-        svg_footer = "</svg>\n"
-        return svg_header + self._svg() + svg_footer
+        return SVG([self], width=width, height=height).render()
 
     def _repr_svg_(self):
         """Returns the svg representation of this node.
@@ -191,6 +182,38 @@ class Shape:
         svg image.
         """
         return self.as_svg()
+
+class SVG:
+    """SVG renders any svg element into an svg image.
+    """
+    def __init__(self, nodes, width=300, height=300):
+        self.nodes = nodes
+        self.width = width
+        self.height = height
+
+    def render(self):
+        svg_header = render_tag(
+            tag="svg",
+            width=self.width,
+            height=self.height,
+            viewBox=f"-{self.width//2} -{self.height//2} {self.width} {self.height}",
+            fill="none",
+            stroke="black",
+            xmlns="http://www.w3.org/2000/svg") + "\n"
+        svg_footer = "</svg>\n"
+
+        nodes = "".join(node._svg(indent="  ") for node in self.nodes)
+        return svg_header + nodes + svg_footer
+
+    def _repr_svg_(self):
+        return self.render()
+
+    def __str__(self):
+        return self.render()
+
+    def __repr__(self):
+        return "SVG:{self.nodes}"
+
 
 class circle(Shape):
     """Creates a circle shape.
@@ -521,13 +544,6 @@ def cycle(shape, n=18, x=0, y=0, s=None, angle=None):
         >>> show(shape)
     """
     angle = angle if angle is not None else 360/n
-    # if s is not None:
-    #     transform = lambda shape, i: rotate(scale(shape, xs=s**i), i*angle, x, y)
-    # else:
-    #     transform = lambda shape, i: rotate(i*angle, x, y)
-
-    # shapes = [transform(shape, i) for i in range(n)]
-
     shapes = [rotate(shape, i*angle, x, y) for i in range(n)]
     if s is not None:
         shapes = [scale(shape_, xs=s**i) for i, shape_ in enumerate(shapes)]
@@ -556,11 +572,13 @@ def show(*shapes):
         >>> s = rect()
         >>> show(c, s)
     """
-    from IPython.display import display
     markers = [
         rect(x=-150, y=-150, width=300, height=300, stroke="#ddd"),
         line(x1=-150, y1=0, x2=150, y2=0, stroke="#ddd"),
         line(x1=0, y1=-150, x2=0, y2=150, stroke="#ddd")
     ]
     shapes = markers + list(shapes)
-    display(group(shapes))
+    img = SVG(shapes)
+
+    from IPython.display import display
+    display(img)

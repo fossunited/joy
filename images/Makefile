@@ -1,3 +1,14 @@
+SOURCES=$(wildcard [a-z]*.py)
+TARGETS=$(SOURCES:%.py=%.svg)
+
+.PHONY: default
+default: build
+
 .PHONY: build
-build:
-	python build.py
+build: $(TARGETS)
+
+%.svg: %.py
+	PYTHONPATH=.. python $< > $@
+
+clean:
+	-rm $(TARGETS)

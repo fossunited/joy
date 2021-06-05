@@ -1,3 +1,11 @@
 <svg width="300" height="300" viewBox="-150 -150 300 300" fill="none" stroke="black" xmlns="http://www.w3.org/2000/svg">
-<circle cx="0" cy="0" r="100" />
+  <g >
+    <g >
+      <rect x="-150" y="-150" width="300" height="300" fill="white" stroke="#ddd" />
+      <line x1="-150" y1="0" x2="150" y2="0" stroke="#ddd" />
+      <line x1="0" y1="-150" x2="0" y2="150" stroke="#ddd" />
+    </g>
+    <circle cx="0" cy="0" r="100" />
+  </g>
 </svg>
+
