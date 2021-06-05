@@ -5,7 +5,9 @@ Joy is a tiny creative coding library in Python.
 ## Installation
 
 The easiest way to install it is download `joy.py` and place it in your
-directory. The library has no dependencies. It can downloaded from:
+directory. The library has no dependencies.
+
+It can be downloaded from:
 
 <https://github.com/fossunited/joy/raw/main/joy.py>
 
