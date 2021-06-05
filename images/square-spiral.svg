@@ -1,0 +1,374 @@
+<svg width="150" height="150" viewBox="-75 -75 150 150" fill="none" stroke="black" xmlns="http://www.w3.org/2000/svg">
+  <g transform="scale(0.5 0.5)">
+    <g stroke-width="2">
+      <g >
+        <rect x="-150" y="-150" width="300" height="300" fill="white" stroke="#ddd" />
+        <line x1="-150" y1="0" x2="150" y2="0" stroke="#ddd" />
+        <line x1="0" y1="-150" x2="0" y2="150" stroke="#ddd" />
+      </g>
+      <g >
+        <g transform="scale(1.0 1.0)">
+          <g transform="rotate(0.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.92 0.92)">
+          <g transform="rotate(5.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.8464 0.8464)">
+          <g transform="rotate(10.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.778688 0.778688)">
+          <g transform="rotate(15.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.7163929600000001 0.7163929600000001)">
+          <g transform="rotate(20.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.6590815232000001 0.6590815232000001)">
+          <g transform="rotate(25.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.6063550013440001 0.6063550013440001)">
+          <g transform="rotate(30.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.5578466012364802 0.5578466012364802)">
+          <g transform="rotate(35.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.5132188731375618 0.5132188731375618)">
+          <g transform="rotate(40.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.47216136328655683 0.47216136328655683)">
+          <g transform="rotate(45.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.4343884542236323 0.4343884542236323)">
+          <g transform="rotate(50.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.3996373778857418 0.3996373778857418)">
+          <g transform="rotate(55.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.3676663876548824 0.3676663876548824)">
+          <g transform="rotate(60.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.3382530766424919 0.3382530766424919)">
+          <g transform="rotate(65.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.31119283051109253 0.31119283051109253)">
+          <g transform="rotate(70.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.28629740407020515 0.28629740407020515)">
+          <g transform="rotate(75.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.26339361174458875 0.26339361174458875)">
+          <g transform="rotate(80.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.24232212280502163 0.24232212280502163)">
+          <g transform="rotate(85.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.22293635298061992 0.22293635298061992)">
+          <g transform="rotate(90.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.20510144474217035 0.20510144474217035)">
+          <g transform="rotate(95.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.1886933291627967 0.1886933291627967)">
+          <g transform="rotate(100.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.173597862829773 0.173597862829773)">
+          <g transform="rotate(105.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.15971003380339116 0.15971003380339116)">
+          <g transform="rotate(110.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.14693323109911988 0.14693323109911988)">
+          <g transform="rotate(115.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.1351785726111903 0.1351785726111903)">
+          <g transform="rotate(120.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.12436428680229507 0.12436428680229507)">
+          <g transform="rotate(125.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.11441514385811147 0.11441514385811147)">
+          <g transform="rotate(130.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.10526193234946256 0.10526193234946256)">
+          <g transform="rotate(135.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.09684097776150556 0.09684097776150556)">
+          <g transform="rotate(140.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.08909369954058512 0.08909369954058512)">
+          <g transform="rotate(145.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.0819662035773383 0.0819662035773383)">
+          <g transform="rotate(150.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.07540890729115125 0.07540890729115125)">
+          <g transform="rotate(155.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.06937619470785915 0.06937619470785915)">
+          <g transform="rotate(160.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.06382609913123043 0.06382609913123043)">
+          <g transform="rotate(165.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.05872001120073199 0.05872001120073199)">
+          <g transform="rotate(170.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.05402241030467343 0.05402241030467343)">
+          <g transform="rotate(175.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.04970061748029956 0.04970061748029956)">
+          <g transform="rotate(180.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.0457245680818756 0.0457245680818756)">
+          <g transform="rotate(185.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.04206660263532555 0.04206660263532555)">
+          <g transform="rotate(190.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.03870127442449951 0.03870127442449951)">
+          <g transform="rotate(195.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.03560517247053955 0.03560517247053955)">
+          <g transform="rotate(200.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.03275675867289639 0.03275675867289639)">
+          <g transform="rotate(205.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.030136217979064676 0.030136217979064676)">
+          <g transform="rotate(210.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.027725320540739506 0.027725320540739506)">
+          <g transform="rotate(215.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.025507294897480347 0.025507294897480347)">
+          <g transform="rotate(220.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.02346671130568192 0.02346671130568192)">
+          <g transform="rotate(225.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.021589374401227365 0.021589374401227365)">
+          <g transform="rotate(230.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.01986222444912918 0.01986222444912918)">
+          <g transform="rotate(235.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.018273246493198843 0.018273246493198843)">
+          <g transform="rotate(240.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.01681138677374294 0.01681138677374294)">
+          <g transform="rotate(245.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.015466475831843504 0.015466475831843504)">
+          <g transform="rotate(250.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.014229157765296024 0.014229157765296024)">
+          <g transform="rotate(255.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.013090825144072343 0.013090825144072343)">
+          <g transform="rotate(260.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.012043559132546556 0.012043559132546556)">
+          <g transform="rotate(265.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.011080074401942832 0.011080074401942832)">
+          <g transform="rotate(270.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.010193668449787405 0.010193668449787405)">
+          <g transform="rotate(275.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.009378174973804413 0.009378174973804413)">
+          <g transform="rotate(280.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.008627920975900061 0.008627920975900061)">
+          <g transform="rotate(285.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.007937687297828056 0.007937687297828056)">
+          <g transform="rotate(290.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.007302672314001812 0.007302672314001812)">
+          <g transform="rotate(295.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.006718458528881668 0.006718458528881668)">
+          <g transform="rotate(300.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.006180981846571134 0.006180981846571134)">
+          <g transform="rotate(305.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.005686503298845444 0.005686503298845444)">
+          <g transform="rotate(310.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.0052315830349378084 0.0052315830349378084)">
+          <g transform="rotate(315.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.004813056392142784 0.004813056392142784)">
+          <g transform="rotate(320.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.004428011880771361 0.004428011880771361)">
+          <g transform="rotate(325.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.004073770930309653 0.004073770930309653)">
+          <g transform="rotate(330.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.0037478692558848806 0.0037478692558848806)">
+          <g transform="rotate(335.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.0034480397154140903 0.0034480397154140903)">
+          <g transform="rotate(340.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.0031721965381809633 0.0031721965381809633)">
+          <g transform="rotate(345.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.0029184208151264864 0.0029184208151264864)">
+          <g transform="rotate(350.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+        <g transform="scale(0.0026849471499163675 0.0026849471499163675)">
+          <g transform="rotate(355.0 0 0)">
+            <rect x="-150.0" y="-150.0" width="300" height="300" />
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
+
