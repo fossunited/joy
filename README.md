@@ -104,3 +104,22 @@ show(shape)
 ```
 
 ![svg](images/square-spiral.svg)
+
+You can try the same with a circle too:
+
+```
+c = circle(cx=100, cy=0, r=50)
+shape = cycle(c, s=0.97, n=36*4, angle=10)
+show(shape)
+```
+![svg](images/square-circle.svg)
+
+For more information, please checkout the [tutorial](tutorial.ipynb).
+
+## Tutorial
+
+See [tutorial.ipynb](tutorial.ipynb).
+
+## License
+
+This repository has been released under the MIT License.

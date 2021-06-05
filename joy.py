@@ -68,7 +68,7 @@ The `translate` functions moves the given shape by `x` and `y`.
 
     >>> c = circle(cx=0, cy=0, r=50)
     >>> shape = combine(c, translate(c, x=50, y=0))
-    >>> show(c)
+    >>> show(shape)
 
 The `rotate` function rotates a shape anti-clockwise by the specified
 angle.
@@ -85,7 +85,7 @@ using the `x` and `y` parameters.
 
 The `scale` function scales a shape.
 
-    >>> shape = scale(circle(), sx=1, sy=0.5)
+    >>> shape = scale(circle(), xs=1, ys=0.5)
     >>> show(shape)
 
 HIGER ORDER TRANSFORMATIONS
