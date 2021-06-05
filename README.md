@@ -55,8 +55,8 @@ The other basic types that are supported are `line` and `rect`.
 ```
 c = circle(cx=0, cy=0, r=50)
 r = rect(x=-50, y=-50, width=100, height=100)
-s = line(x1=-50, y1=-50, x2=50, y2=50)
-show(c, r, s)
+z = line(x1=-50, y1=-50, x2=50, y2=50)
+show(c, r, z)
 ```
 
 ![svg](images/basic-shapes.svg)
@@ -64,9 +64,11 @@ show(c, r, s)
 Joy supports transformations `translate`, `rotate` and `scale`.
 
 ```
-r = rect(x=-50, y=-50, widht=100, height=100)
+r = rect(x=-50, y=-50, width=100, height=100)
 show(rotate(r, angle=45))
 ```
+
+![svg](images/rect-rotate.svg)
 
 Joy comes with very interesting higher-order transformations. The `cycle`
 function rotates a shape repeatedly.
@@ -78,7 +80,7 @@ show(shape)
 
 ![svg](images/cycle-line.svg)
 
-The above example, takes a line and rotates it around the origin 18
+The above example, takes a line and rotates it around the origin `18`
 times and combines all the rotated shapes.
 
 You could cycle a square:
