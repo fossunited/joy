@@ -70,7 +70,8 @@ Joy comes with very interesting higher-order transformations. The `cycle`
 function rotates a shape repeatedly.
 
 ```
-cycle(line())
+shape = cycle(line())
+show(shape)
 ```
 
 ![svg](images/cycle-line.svg)
@@ -81,7 +82,8 @@ times and combines all the rotated shapes.
 You could cycle a square:
 
 ```
-cycle(rect())
+shape = cycle(rect())
+show(shape)
 ```
 
 ![svg](images/cycle-square.svg)
@@ -90,7 +92,8 @@ or a rectangle:
 
 ```
 r = rect(x=-100, y=-50, width=200, height=100)
-cycle(r)
+shape = cycle(r)
+show(shape)
 ```
 
 ![svg](images/cycle-rect.svg)
