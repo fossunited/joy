@@ -85,7 +85,7 @@ using the `x` and `y` parameters.
 
 The `scale` function scales a shape.
 
-    >>> shape = scale(circle(), xs=1, ys=0.5)
+    >>> shape = scale(circle(), sx=1, sy=0.5)
     >>> show(shape)
 
 HIGER ORDER TRANSFORMATIONS
@@ -358,7 +358,7 @@ class group(Shape):
 
         >> c = circle()
         >> r = rect()
-        >>> shape = group([c, r], transform="scale(1, 0.5))
+        >>> shape = group([c, r], transform="scale(1, 0.5)")
         >>> show(shape)
 
     Refer to SVG documentation to understand the transform parameter.
@@ -464,25 +464,25 @@ def rotate(shape, angle, x=None, y=None):
         args += f" {x} {y}"
     return group([shape], transform=f"rotate({args})")
 
-def scale(shape, xs, ys=None):
-    """Returns a new shape containing the given shape scaled by xs and
-    ys in horizontally and vertically respectively.
+def scale(shape, sx, sy=None):
+    """Returns a new shape containing the given shape scaled by sx and
+    sy in horizontally and vertically respectively.
 
     Parameters:
 
         shape:
             The shape to scale.
 
-        xs:
-            The scale factor in the horizontal direction.
+        sx:
+            The scale factor in the x direction.
 
-        ys:
-            The scale factor in the horizontal direction. Defaults to
-            the value of xs if not provided.
+        sy:
+            The scale factor in the y direction. Defaults to
+            the value of sx if not provided.
     """
-    if ys is None:
-        ys = xs
-    return group([shape], transform=f"scale({xs} {ys})")
+    if sy is None:
+        sy = sx
+    return group([shape], transform=f"scale({sx} {sy})")
 
 def cycle(shape, n=18, x=0, y=0, s=None, angle=None):
     """
@@ -535,7 +535,7 @@ def cycle(shape, n=18, x=0, y=0, s=None, angle=None):
 
     Cycle an ellipse:
 
-        >>> e = scale(circle(), xs=1, ys=0.5)
+        >>> e = scale(circle(), sx=1, sy=0.5)
         >>> show(cycle(e))
 
     Create a spiral with shirnking squares:
@@ -546,7 +546,7 @@ def cycle(shape, n=18, x=0, y=0, s=None, angle=None):
     angle = angle if angle is not None else 360/n
     shapes = [rotate(shape, i*angle, x, y) for i in range(n)]
     if s is not None:
-        shapes = [scale(shape_, xs=s**i) for i, shape_ in enumerate(shapes)]
+        shapes = [scale(shape_, sx=s**i) for i, shape_ in enumerate(shapes)]
     return group(shapes)
 
 def show(*shapes):
