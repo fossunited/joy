@@ -127,6 +127,16 @@ For more information, please checkout the [tutorial](tutorial.ipynb).
 
 See [tutorial.ipynb](tutorial.ipynb).
 
+## Acknowledgements
+
+Special thanks to Amit Kapoor (@amitkaps). This library woundn't have
+been possible without his inputs.
+
+The long discussions between @anandology and @amitkaps on functional
+programming and computational artistry (for almost over an year) and the
+[initial experiments](https://amitkaps.com/atristry) were some of the
+seeds that gave life to this library.
+
 ## License
 
 This repository has been released under the MIT License.
