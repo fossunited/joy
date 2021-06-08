@@ -1,8 +1,8 @@
 name: test comnbine
 code: |
-  combine(circle(), rect())
+  Circle() + Rectangle()
 expected: |
-  <g >
+  <g>
     <circle cx="0" cy="0" r="100" />
     <rect x="-100.0" y="-100.0" width="200" height="200" />
   </g>

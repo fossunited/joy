@@ -1,48 +1,23 @@
 name: test translate
 code: |
-  translate(rect(x=10, y=20, width=30, height=40), x=100, y=200)
+  Circle(radius=50) | Translate(x=10, y=20)
 expected: |
-  <g transform="translate(100 200)">
-    <rect x="10" y="20" width="30" height="40" />
-  </g>
+  <circle cx="0" cy="0" r="50" transform="translate(10 20)" />
 ---
 name: test rotate
 code: |
-  rotate(rect(x=10, y=20, width=30, height=40), angle=45)
+  Rectangle() | Rotate(angle=45)
 expected: |
-  <g transform="rotate(45)">
-    <rect x="10" y="20" width="30" height="40" />
-  </g>
+  <rect x="-100.0" y="-100.0" width="200" height="200" transform="rotate(45)" />
 ---
-name: test rotate with position
+name: test rotate with anchor
 code: |
-  rotate(
-    rect(x=10, y=20, width=30, height=40),
-    angle=45,
-    x=100,
-    y=200)
+  Rectangle() | Rotate(angle=45, anchor=Point(10, 20))
 expected: |
-  <g transform="rotate(45 100 200)">
-    <rect x="10" y="20" width="30" height="40" />
-  </g>
+  <rect x="-100.0" y="-100.0" width="200" height="200" transform="rotate(45 10 20)" />
 ---
 name: test scale
 code: |
-  scale(
-    rect(x=10, y=20, width=30, height=40),
-    sx=2,
-    sy=0.5)
+  Circle() | Scale(sx=1, sy=0.5)
 expected: |
-  <g transform="scale(2 0.5)">
-    <rect x="10" y="20" width="30" height="40" />
-  </g>
----
-name: test scale only with xs
-code: |
-  scale(
-    rect(x=10, y=20, width=30, height=40),
-    sx=2)
-expected: |
-  <g transform="scale(2 2)">
-    <rect x="10" y="20" width="30" height="40" />
-  </g>
+  <circle cx="0" cy="0" r="100" transform="scale(1 0.5)" />

@@ -10,7 +10,7 @@ An example of using joy:
 
     >>> from joy import *
     >>>
-    >>> c = circle(cx=100, cy=100, r=50)
+    >>> c = Circle(center=Point(x=100, y=100), radius=50)
     >>> show(c)
 
 The `cicle` function creates a new circle and the `show` function
@@ -36,70 +36,70 @@ By default the size of the canvas is (300, 300).
 
 BASIC SHAPES
 
-Joy supports `circle`, `rect` and `line` as basic shapes.
+Joy supports `Circle`, `Rect` and `Line` as basic shapes.
 
-    >>> c = circle(cx=100, cy=100, r=50)
-    >>> r = rect(x=-100, y=-100, width=200, height=200)
+    >>> c = Circle(center=Point(x=100, y=100), radius=50)
+    >>> r = Rectangle(center=Point(0, 0), width=200, height=200)
     >>> show(c, r)
 
 All basic shapes have default values of all the arguments, making it
 easier to start using them.
 
-    >>> circle()
-    <circle {'cx': 0, 'cy': 0, 'r': 100}>
-    >>> rect()
-    <rect {'x': -100, 'y': -100, 'width': 100, 'height': 100}>
-    >>> line()
-    <line {'x1': -100', 'y1': 0, 'x2': 100, 'y2': 0}
+    >>> c = Circle()
+    >>> r = Rectangle()
+    >>> z = Line()
+    >>> show(c, r, z)
 
 COMBINING SHAPES
 
 The `combine` function is used to combine multiple shapes into a
 single shape.
 
-    >>> c = combine(circle(), rect())
-    >>> show(c)
+    >>> shape = combine(Circle(), Rect())
+    >>> show(shape)
 
 TRANSFORMATIONS
 
-Joy supports `translate`, `rotate` and `scale` transformations.
+Joy supports `Translate`, `Rotate` and `Scale` transformations.
 
-The `translate` functions moves the given shape by `x` and `y`.
+The `Translate` transformation moves the given shape by `x` and `y`.
 
-    >>> c = circle(cx=0, cy=0, r=50)
-    >>> shape = combine(c, translate(c, x=50, y=0))
-    >>> show(shape)
+    >>> c1 = Circle(radius=50)
+    >>> c2 = c1 | Translate(x=100, y=0)
+    >>> show(c1, c2)
 
-The `rotate` function rotates a shape anti-clockwise by the specified
+As you've seen the above example, transformations are applied using
+the `|` operator.
+
+The `Rotate` transformation rotates a shape clockwise by the specified
 angle.
 
-    >>> shape = rotate(rect(), angle=45)
+    >>> shape = Rectangle() | Rotate(angle=45)
     >>> show(shape)
 
 By default the `rotate` function rotates the shape around the origin.
-However, it is possible to specify the reference point for rotation
-using the `x` and `y` parameters.
+However, it is also possible to specify the anchor point for rotation.
 
-    >>> shape = rotate(rect(), angle=45, x=100, y=100)
+    >>> shape = Rectangle() | Rotate(angle=45, anchor=Point(x=100, y=100))
     >>> show(shape)
 
-The `scale` function scales a shape.
+The `Scale` transformation scales a shape.
 
-    >>> shape = scale(circle(), sx=1, sy=0.5)
+    >>> shape = Circle() | Scale(sx=1, sy=0.5)
     >>> show(shape)
 
 HIGER ORDER TRANSFORMATIONS
 
-Joy supports a transorm called `cycle` to rotate a shape multiple times
+Joy supports a transorm called `Cycle` to rotate a shape multiple times
 with angle from 0 to 360 degrees and combining all the resulting shapes.
 
-    >>> flower = cycle(rect())
+    >>> flower = Rectangle() | Cycle()
     >>> show(flower)
 
-By default, cycle repeats the rotation for 18 times, however that can be
+By default, `Cycle` repeats the rotation for `18` times, however that can be
 customizing by specifying the parameter `n`.
 
-    >>> shape = cycle(rect(), n=3)
+    >>> shape = rect() | Cycle(n=3)
     >>> show(shape)
 
 JUPYTER LAB INTEGRATION
@@ -122,12 +122,13 @@ class Shape:
     Typically, users do not interact with this class directly, but use it
     through it's subclasses.
     """
-    def __init__(self, tag, children=None, **attrs):
+    def __init__(self, tag, children=None, transform=None, **attrs):
         """Creates a new shape.
         """
         self.tag = tag
         self.children = children
         self.attrs = attrs
+        self.transform = None
 
     def __repr__(self):
         return f"<{self.tag} {self.attrs}>"
@@ -138,25 +139,45 @@ class Shape:
         else:
             raise AttributeError(name)
 
+    def apply_transform(self, transform):
+        if self.transform is not None:
+            transform = self.transform | transform
+
+        shape = self.clone()
+        shape.transform = transform
+        return shape
+
+    def clone(self):
+        shape = object.__new__(self.__class__)
+        shape.__dict__.update(self.__dict__)
+        return shape
+
+    def get_attrs(self):
+        attrs = dict(self.attrs)
+        if self.transform:
+            attrs['transform'] = self.transform.as_str()
+        return attrs
+
     def _svg(self, indent="") -> str:
         """Returns the svg representation of this node.
 
         This method is used to recursively construct the svg of a node
         and it's children.
 
-            >>> c = circle(cx=100, cy=100, r=50)
+            >>> c = Shape(tag='circle', cx=100, cy=100, r=50)
             >>> c._svg()
             '<circle cx="100" cy="100" r="50" />'
         """
+        attrs = self.get_attrs()
         if self.children:
-            tag_text = render_tag(self.tag, **self.attrs, close=False)
+            tag_text = render_tag(self.tag, **attrs, close=False)
             return (
                 indent + tag_text + "\n" +
                 "".join(c._svg(indent + "  ") for c in self.children) +
                 indent + "</" + self.tag + ">\n"
             )
         else:
-            tag_text = render_tag(self.tag, **self.attrs, close=True)
+            tag_text = render_tag(self.tag, **attrs, close=True)
             return indent + tag_text + "\n"
 
     def as_svg(self, width=300, height=300) -> str:
@@ -167,13 +188,18 @@ class Shape:
 
         Example:
 
-            >>> c = circle(cx=100, cy=100, r=50)
+            >>> c = Shape(tag='circle', cx=100, cy=100, r=50)
             >>> print(c.as_svg())
             <svg width="300" height="300" viewBox="-150 -150 300 350" fill="none" stroke="black" xmlns="http://www.w3.org/2000/svg">
               <circle cx="100" cy="100" r="50" />
             </svg>
         """
         return SVG([self], width=width, height=height).render()
+
+    def __add__(self, shape):
+        if not isinstance(shape, Shape):
+            return NotImplemented
+        return Group([self, shape])
 
     def _repr_svg_(self):
         """Returns the svg representation of this node.
@@ -214,122 +240,153 @@ class SVG:
     def __repr__(self):
         return "SVG:{self.nodes}"
 
+class Point:
+    """Creates a new Point.
 
-class circle(Shape):
+    Point represents a point in the coordinate space and it contains
+    attributes x and y.
+
+        >>> p = Point(x=100, y=50)
+    """
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __eq__(self, p):
+        return isinstance(p, Point) \
+            and p.x == self.x \
+            and p.y == self.y
+
+    def __repr__(self):
+        return f"Point({self.x}, {self.y})"
+
+class Circle(Shape):
     """Creates a circle shape.
 
     Parameters:
-        cx:
-            The x-coordinate of the center of the circle.
-            Defaults to 0 when not specified.
+        center:
+            The center point of the circle.
+            Defaults to Point(0, 0) when not specified.
 
-        cy:
-            The y-coordinate of the center of the circle.
-            Defaults to 0 when not specified.
-
-        r:
+        radius:
             The radius of the circle.
             Defaults to 100 when not specified.
 
     Examples:
 
+    Draw a circle.
+
+        >>> c = Circle()
+        >>> show(c)
+
+    Draw a Circle with radius 50.
+
+        >>> c = Circle(radius=50)
+        >>> show(c)
+
     Draw a circle with center at (100, 100) and radius as 50.
 
-        >>> c = circle(cx=100, cy=100, r=50)
+        >>> c = Circle(center=Point(x=100, y=100), radius=50)
         >>> show(c)
 
     When no arguments are specified, it uses (0, 0) as the center and
     100 as the radius.
-
-        >>> c = circle()
-        >>> show(c)
     """
-    def __init__(self, **kwargs):
-        cx = kwargs.pop("cx", 0)
-        cy = kwargs.pop("cy", 0)
-        r = kwargs.pop("r", 100)
-        super().__init__("circle", cx=cx, cy=cy, r=r, **kwargs)
+    def __init__(self, center=Point(0, 0), radius=100, **kwargs):
+        self.center = center
+        self.radius = radius
 
-class rect(Shape):
+        cx, cy = self.center.x, self.center.y
+        super().__init__("circle",
+            cx=cx,
+            cy=cy,
+            r=self.radius,
+            **kwargs)
+
+class Rectangle(Shape):
     """Creates a rectangle shape.
 
     Parameters:
-        x:
-            The x-coordinate of the top-left corner of the rectangle.
-
-        y:
-            The y-coordinate of the top-left corner of the rectangle.
+        center:
+            The center point of the rectangle. Defaults to (0, 0) when
+            not specified.
 
         width:
-            The width of the rectangle.
+            The width of the rectangle. Defaults to 100 when not
+            specified.
 
         height:
-            The height of the rectangle.
+            The height of the rectangle. Defaults to 100 when not
+            specified.
 
     Examples:
 
-    Draw a rectangle with top-left corner at (100, 100) and with a width
+    Draw a rectangle:
+
+        >>> r = Rectangle()
+        >>> show(r)
+
+    Draw a rectangle having a width of 200 and a height of 100.
+
+        >>> r = Rectangle(width=200, height=100)
+        >>> show(r)
+
+    Draw a rectangle centered at (100, 100) and with a width
     of 200 and height of 100.
 
-        >>> r = rect(x=100, y=100, width=200, height=100)
-        >>> show(r)
-
-    When no arguments are specified, it draws a rectangle with a width
-    of 200 and a height of 200, centered around the origin.
-
-        >>> r = rect()
-        >>> show(r)
-
-    It is also possible to specify just the width and height to create a
-    rectangle centered around origin.
-
-        >>> r = rect(width=200, height=100)
+        >>> r = Rectangle(center=Point(x=100, y=100), width=200, height=100)
         >>> show(r)
     """
-    def __init__(self, **kwargs):
-        width = kwargs.pop("width", 200)
-        height = kwargs.pop("height", 200)
-        x = kwargs.pop("x", -width/2)
-        y = kwargs.pop("y", -height/2)
-        super().__init__("rect", x=x, y=y, width=width, height=height, **kwargs)
+    def __init__(self, center=Point(0, 0), width=200, height=200, **kwargs):
+        self.center = center
+        self.width = width
+        self.height = height
 
-class line(Shape):
+        cx, cy = self.center.x, self.center.y
+        x = cx - width/2
+        y = cy - height/2
+        super().__init__(
+            tag="rect",
+            x=x,
+            y=y,
+            width=width,
+            height=height,
+            **kwargs)
+
+class Line(Shape):
     """Basic shape for drawing a line connecting two points.
 
     Parameters:
-        x1:
-            The x-coordinate of the starting point of the line.
+        start:
+            The starting point of the line. Defaults to (-100, 0) when
+            not specified.
 
-        y1:
-            The y-coordinate of the starting point of the line.
-
-        x2:
-            The x-coordinate of the ending point of the line.
-
-        y2:
-            The y-coordinate of the ending point of the line.
+        end:
+            The ending point of the line. Defaults to (100, 0) when not
+            specified.
 
     Examples:
 
+    Draw a line:
+
+        >>> z = line()
+        >>> show(z)
+
     Draw a line from (0, 0) to (100, 50).
 
-        >>> shape = line(x1=0, y1=0, x2=100, y2=50)
-        >>> show(shape)
-
-    When no arguments are specified, it draws a line from (-100, 0) to
-    (100, 0).
-
-        >>> shape = line()
-        >>> show(shape)
+        >>> z = line(start=Point(x=0, y=0), end=Point(x=100, y=50))
+        >>> show(z)
     """
-    def __init__(self, **kwargs):
-        x1 = kwargs.pop("x1", -100)
-        y1 = kwargs.pop("y1", 0)
-        x2 = kwargs.pop("x2", 100)
-        y2 = kwargs.pop("y2", 0)
+    def __init__(self, start=Point(-100, 0), end=Point(100, 0), **kwargs):
+        self.start = start
+        self.end = end
+
+        x1, y1 = self.start.x, self.start.y
+        x2, y2 = self.end.x, self.end.y
+
         super().__init__("line", x1=x1, y1=y1, x2=x2, y2=y2, **kwargs)
 
-class group(Shape):
+class Group(Shape):
     """Creates a container to group a list of shapes.
 
     This class is not meant for direct consumption of the users. Users
@@ -342,29 +399,23 @@ class group(Shape):
         shapes:
             The list of shapes to group.
 
-        transform:
-            The transformation to apply as an string.
-
     Examples:
 
     Combine a circle and a rectangle.
 
-        >> c = circle()
-        >> r = rect()
-        >>> shape = group([c, r])
+        >> c = Circle()
+        >> r = Rectangle()
+        >>> shape = Group([c, r])
         >>> show(shape)
 
-    Transformations can specified when creating a group.
+    Shapes can also be combined using the + operator and that creates
+    a group implicitly.
 
-        >> c = circle()
-        >> r = rect()
-        >>> shape = group([c, r], transform="scale(1, 0.5)")
+        >>> shape = Circle() + Rectangle()
         >>> show(shape)
-
-    Refer to SVG documentation to understand the transform parameter.
     """
-    def __init__(self, shapes, transform=None, **kwargs):
-        super().__init__("g", children=shapes, transform=transform, **kwargs)
+    def __init__(self, shapes, **kwargs):
+        super().__init__("g", children=shapes, **kwargs)
 
 def render_tag(tag, *, close=False, **attrs):
     """Renders a html/svg tag.
@@ -384,10 +435,13 @@ def render_tag(tag, *, close=False, **attrs):
     """
     end = " />" if close else ">"
 
-    items = [(k.replace("_", "-"), html.escape(str(v))) for k, v in attrs.items() if v is not None]
-    attrs_text = " ".join(f'{k}="{v}"' for k, v in items)
+    if attrs:
+        items = [(k.replace("_", "-"), html.escape(str(v))) for k, v in attrs.items() if v is not None]
+        attrs_text = " ".join(f'{k}="{v}"' for k, v in items)
 
-    return f"<{tag} {attrs_text}{end}"
+        return f"<{tag} {attrs_text}{end}"
+    else:
+        return f"<{tag}{end}"
 
 def combine(*shapes):
     """Combines multiple shapes in to a single shape by overlaying all
@@ -396,15 +450,40 @@ def combine(*shapes):
         >>> shape = combine(circle(), rect())
         >>> show(shape)
     """
-    return group(shapes)
+    return Group(shapes)
 
-def translate(shape, x=0, y=None):
-    """Return a new shape containing given shape moved by x and y.
+class Transformation:
+    def apply(self, shape):
+        return shape.apply_transform(self)
+
+    def join(self, transformation):
+        return TransformationList([self, transformation])
+
+    def __or__(self, right):
+        if not isinstance(right, Transformation):
+            return NotImplemented
+        return self.join(transformation=right)
+
+    def __ror__(self, left):
+        if not isinstance(left, Shape):
+            return NotImplemented
+        return self.apply(shape=left)
+
+class TransformationList(Transformation):
+    def __init__(self, transformations):
+        self.transformations = transformations
+
+    def join(self, transformation):
+        return TransformationList(self.transformations + [transformation])
+
+    def as_str(self):
+        return " ".join(t.as_str() for t in self.transformations)
+
+class Translate(Transformation):
+    """Creates a new Translate transformation that moves a shape by
+    x and y when applied.
 
     Parameters:
-        shape:
-            The shape to translate
-
         x:
             The number of units to move in the x direction
 
@@ -415,64 +494,60 @@ def translate(shape, x=0, y=None):
 
     Translate a circle by (100, 50).
 
-        >>> c = translate(circle(), 100, 50)
+        >>> c = Circle() | Translate(100, 50)
         >>> show(c)
     """
-    if y is None:
-        y = x
-    return group([shape], transform=f"translate({x} {y})")
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
 
-def rotate(shape, angle, x=None, y=None):
-    """Returns a new shape containing the given shape rotated by
-    the specified angle.
+    def as_str(self):
+        return f"translate({self.x} {self.y})"
 
-    The shape is rotated around the point (x, y), which defaults to
-    (0, 0) when not specified.
+class Rotate(Transformation):
+    """Creates a new rotate transformation.
+
+    When applied to a shape, it rotates the given shape by angle, around
+    the anchor point.
 
     Parameters:
-
-        shape:
-            The shape to rotate.
 
         angle:
             The angle to rotate the shape in degrees.
 
-        x:
-            The x-coordinate of the reference point used for rotation.
-            Defaults to 0 when not specified.
-
-        y:
-            The y-coordinate of the reference point used for rotation.
-            Defaults to 0 when not specified.
+        anchor:
+            The andhor point around which the rotation is performed.
 
     Examples:
 
     Rotates a square by 45 degrees.
 
-        >>> shape = rotate(rect(), 45)
+        >>> shape = Rectangle() | Rotate(angle=45)
         >>> show(shape)
 
     Rotate a rectangle around it's top-left corner and
     combine with it self.
 
-        >>> r = rect(x=-50, y=-50, w=100, h=100)
-        >>> shape = combine(r, rotate(r, 45, x=r.x, y=r.y))
+        >>> r1 = Rectangle()
+        >>> r2 = r1 | Rotate(angle=45, anchor=(r.point[0]))
+        >>> shape = combine(r1, r2)
         >>> show(shape)
     """
-    args = f"{angle}"
-    if x is not None and y is not None:
-        args += f" {x} {y}"
-    return group([shape], transform=f"rotate({args})")
+    def __init__(self, angle, anchor=Point(0, 0)):
+        self.angle = angle
+        self.anchor = anchor
 
-def scale(shape, sx, sy=None):
-    """Returns a new shape containing the given shape scaled by sx and
-    sy in horizontally and vertically respectively.
+    def as_str(self):
+        origin = Point(0, 0)
+        if self.anchor == origin:
+            return f"rotate({self.angle})"
+        else:
+            return f"rotate({self.angle} {self.anchor.x} {self.anchor.y})"
+
+class Scale(Transformation):
+    """Creates a new scale transformation.
 
     Parameters:
-
-        shape:
-            The shape to scale.
-
         sx:
             The scale factor in the x direction.
 
@@ -480,11 +555,16 @@ def scale(shape, sx, sy=None):
             The scale factor in the y direction. Defaults to
             the value of sx if not provided.
     """
-    if sy is None:
-        sy = sx
-    return group([shape], transform=f"scale({sx} {sy})")
+    def __init__(self, sx, sy=None):
+        if sy is None:
+            sy = sx
+        self.sx = sx
+        self.sy = sy
 
-def cycle(shape, n=18, x=0, y=0, s=None, angle=None):
+    def as_str(self):
+        return f"scale({self.sx} {self.sy})"
+
+class Cycle(Transformation):
     """
     Rotates the given shape repeatedly and combines all the resulting
     shapes.
@@ -493,21 +573,13 @@ def cycle(shape, n=18, x=0, y=0, s=None, angle=None):
     surprising patterns.
 
     Parameters:
-
-        shape:
-            The shape to cycle.
-
         n:
             The number of times to rotate. This also determines the
             angle of each rotation, which will be 360/n.
 
-        x:
-            The x-coordinate of the reference point used for rotation.
-            Defaults to 0 when not specified.
-
-        y:
-            The y-coordinate of the reference point used for rotation.
-            Defaults to 0 when not specified.
+        anchor:
+            The anchor point for the rotation. Defaults to (0, 0) when
+            not specified.
 
         s:
             Optional scale factor to scale the shape for each rotation.
@@ -520,34 +592,40 @@ def cycle(shape, n=18, x=0, y=0, s=None, angle=None):
 
     Cycle a line:
 
-        >>> shape = cycle(line())
+        >>> shape = Line() | Cycle()
         >>> show(shape)
 
     Cycle a square:
 
-        >>> shape = cycle(rect())
+        >>> shape = Rectangle() | Cycle()
         >>> show(shape)
 
     Cycle a rectangle:
 
-        >>> shape = cycle(rect(width=200, height=100))
+        >>> shape = Rectangle(width=200, height=100) | Cycle()
         >>> show(shape)
 
     Cycle an ellipse:
 
-        >>> e = scale(circle(), sx=1, sy=0.5)
-        >>> show(cycle(e))
+        >>> e = scale(Circle(), sx=1, sy=0.5)
+        >>> show(e | Cycle())
 
     Create a spiral with shirnking squares:
 
-        >>> shape = cycle(rect(width=300, height=300), n=72, s=0.92)
+        >>> shape = Rectangle(width=300, height=300) | cycle(n=72, s=0.92)
         >>> show(shape)
     """
-    angle = angle if angle is not None else 360/n
-    shapes = [rotate(shape, i*angle, x, y) for i in range(n)]
-    if s is not None:
-        shapes = [scale(shape_, sx=s**i) for i, shape_ in enumerate(shapes)]
-    return group(shapes)
+    def __init__(self, n=18, anchor=Point(x=0, y=0), s=None, angle=None):
+        self.n = n
+        self.angle = angle if angle is not None else 360/n
+        self.anchor = anchor
+        self.s = s
+
+    def apply(self, shape):
+        shapes = [shape | Rotate(angle=i*self.angle, anchor=self.anchor) for i in range(self.n)]
+        if self.s is not None:
+            shapes = [shape_ | Scale(sx=self.s**i) for i, shape_ in enumerate(shapes)]
+        return Group(shapes)
 
 def show(*shapes):
     """Shows the given shapes.
@@ -573,9 +651,9 @@ def show(*shapes):
         >>> show(c, s)
     """
     markers = [
-        rect(x=-150, y=-150, width=300, height=300, stroke="#ddd"),
-        line(x1=-150, y1=0, x2=150, y2=0, stroke="#ddd"),
-        line(x1=0, y1=-150, x2=0, y2=150, stroke="#ddd")
+        Rectangle(width=300, height=300, stroke="#ddd"),
+        Line(start=Point(x=-150, y=0), end=Point(x=150, y=0), stroke="#ddd"),
+        Line(start=Point(x=0, y=-150), end=Point(x=0, y=150), stroke="#ddd")
     ]
     shapes = markers + list(shapes)
     img = SVG(shapes)
