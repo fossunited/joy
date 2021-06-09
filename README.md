@@ -99,7 +99,7 @@ show(shape)
 Transformations can be chained too.
 
 ```
-r1 = Rectangle()
+r1 = Rectangle(width=200, height=200)
 r2 = r1 | Rotate(angle=45) | Scale(1/SQRT2)
 show(r1, r2)
 ```
@@ -135,7 +135,7 @@ show(shape)
 We could do the same with a square:
 
 ```
-shape = Rectangle() | Repeat(18, Rotate(angle=10))
+shape = Rectangle(width=200, height=200) | Repeat(18, Rotate(angle=10))
 show(shape)
 ```
 

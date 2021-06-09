@@ -362,7 +362,7 @@ class Rectangle(Shape):
             not specified.
 
         width:
-            The width of the rectangle. Defaults to 100 when not
+            The width of the rectangle. Defaults to 200 when not
             specified.
 
         height:
@@ -376,9 +376,9 @@ class Rectangle(Shape):
         >>> r = Rectangle()
         >>> show(r)
 
-    Draw a rectangle having a width of 200 and a height of 100.
+    Draw a square.
 
-        >>> r = Rectangle(width=200, height=100)
+        >>> r = Rectangle(width=200, height=200)
         >>> show(r)
 
     Draw a rectangle centered at (100, 100) and with a width
@@ -387,7 +387,7 @@ class Rectangle(Shape):
         >>> r = Rectangle(center=Point(x=100, y=100), width=200, height=100)
         >>> show(r)
     """
-    def __init__(self, center=Point(0, 0), width=200, height=200, **kwargs):
+    def __init__(self, center=Point(0, 0), width=200, height=100, **kwargs):
         self.center = center
         self.width = width
         self.height = height
