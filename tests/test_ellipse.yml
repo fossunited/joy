@@ -1,0 +1,23 @@
+name: test ellipse
+code: |
+  Ellipse()
+expected: |
+  <ellipse cx="0" cy="0" rx="100.0" ry="50.0" />
+---
+name: test ellipse with width and height
+code: |
+  Ellipse(width=100, height=200)
+expected: |
+  <ellipse cx="0" cy="0" rx="50.0" ry="100.0" />
+---
+name: test ellipse with center, width and height
+code: |
+  Ellipse(center=Point(x=50, y=50), width=100, height=200)
+expected: |
+  <ellipse cx="50" cy="50" rx="50.0" ry="100.0" />
+---
+name: test ellipse with stroke and fill
+code: |
+  Ellipse(center=Point(x=50, y=50), width=100, height=200, stroke="black", fill="green")
+expected: |
+  <ellipse cx="50" cy="50" rx="50.0" ry="100.0" stroke="black" fill="green" />

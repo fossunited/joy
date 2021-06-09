@@ -303,6 +303,56 @@ class Circle(Shape):
             r=self.radius,
             **kwargs)
 
+class Ellipse(Shape):
+    """Creates an ellipse shape.
+
+    Parameters:
+        center:
+            The center point of the ellipse. Defaults to (0, 0) when
+            not specified.
+
+        width:
+            The width of the ellipse. Defaults to 100 when not
+            specified.
+
+        height:
+            The height of the ellipse. Defaults to 100 when not
+            specified.
+
+    Examples:
+
+    Draw a ellipse with center at origin and width of 200 and height of 100:
+
+        >>> r = Ellipse()
+        >>> show(r)
+
+    Draw a ellipse having a width of 100 and a height of 50.
+
+        >>> r = Ellipse(width=100, height=50)
+        >>> show(r)
+
+    Draw a ellipse centered at (100, 100) and with a width
+    of 200 and height of 100.
+
+        >>> r = Ellipse(center=Point(x=100, y=100), width=200, height=100)
+        >>> show(r)
+    """
+    def __init__(self, center=Point(0, 0), width=200, height=100, **kwargs):
+        self.center = center
+        self.width = width
+        self.height = height
+
+        cx, cy = self.center.x, self.center.y
+        rx = width/2
+        ry = height/2
+        super().__init__(
+            tag="ellipse",
+            cx=cx,
+            cy=cy,
+            rx=rx,
+            ry=ry,
+            **kwargs)
+
 class Rectangle(Shape):
     """Creates a rectangle shape.
 
