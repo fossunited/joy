@@ -614,6 +614,46 @@ class Scale(Transformation):
     def as_str(self):
         return f"scale({self.sx} {self.sy})"
 
+class Repeat(Transformation):
+    """Repeat is a higher-order transformation that repeats a
+    transformation multiple times.
+
+    Parameters:
+        n:
+            The number of times to rotate. This also determines the
+            angle of each rotation, which will be 360/n.
+
+        transformation:
+            The transfomation to apply repeatedly.
+
+    Examples:
+
+    Draw three circles:
+
+        >>> shape = Circle(radius=25) | Repeat(4, Translate(x=50, y=0))
+        >>> show(shape)
+
+    Rotate a line multiple times:
+
+        >>> shape = Line() | Repeat(36, Rotate(angle=10))
+        >>> show(shape)
+
+    Rotate and shrink a line multiple times:
+
+        >>> shape = Line() | Repeat(18, Rotate(angle=10) | Scale(sx=0.9))
+        >>> show(shape)
+    """
+    def __init__(self, n, transformation):
+        self.n = n
+        self.transformation = transformation
+
+    def apply(self, shape):
+        shapes = [shape]
+        for i in range(self.n-1):
+            shape = self.transformation.apply(shape)
+            shapes.append(shape)
+        return Group(shapes)
+
 class Cycle(Transformation):
     """
     Rotates the given shape repeatedly and combines all the resulting

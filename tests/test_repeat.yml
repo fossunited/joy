@@ -1,0 +1,21 @@
+name: test repeat with rotate on line
+code: |
+  Line() | Repeat(4, Rotate(angle=45))
+expected: |
+  <g>
+    <line x1="-100" y1="0" x2="100" y2="0" />
+    <line x1="-100" y1="0" x2="100" y2="0" transform="rotate(45)" />
+    <line x1="-100" y1="0" x2="100" y2="0" transform="rotate(45) rotate(45)" />
+    <line x1="-100" y1="0" x2="100" y2="0" transform="rotate(45) rotate(45) rotate(45)" />
+  </g>
+---
+name: test repeat with rotate|scale on line
+code: |
+  Line() | Repeat(4, Rotate(angle=45) | Scale(sx=0.9))
+expected: |
+  <g>
+    <line x1="-100" y1="0" x2="100" y2="0" />
+    <line x1="-100" y1="0" x2="100" y2="0" transform="rotate(45) scale(0.9 0.9)" />
+    <line x1="-100" y1="0" x2="100" y2="0" transform="rotate(45) scale(0.9 0.9) rotate(45) scale(0.9 0.9)" />
+    <line x1="-100" y1="0" x2="100" y2="0" transform="rotate(45) scale(0.9 0.9) rotate(45) scale(0.9 0.9) rotate(45) scale(0.9 0.9)" />
+  </g>
