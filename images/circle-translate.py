@@ -1,5 +1,5 @@
 from joy import *
 from _img import render
 
-c = Circle(center=Point(x=50, y=50), radius=50)
+c = Circle(radius=50) | Translate(x=100, y=0)
 render(c)

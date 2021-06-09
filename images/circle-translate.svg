@@ -5,8 +5,7 @@
       <line x1="-150" y1="0" x2="150" y2="0" stroke="#ddd" />
       <line x1="0" y1="-150" x2="0" y2="150" stroke="#ddd" />
     </g>
-    <rect x="-100.0" y="-100.0" width="200" height="200" />
-    <rect x="-100.0" y="-100.0" width="200" height="200" transform="rotate(45) scale(0.7071067811865475 0.7071067811865475)" />
+    <circle cx="0" cy="0" r="50" transform="translate(100 0)" />
   </g>
 </svg>
 

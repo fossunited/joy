@@ -17,7 +17,7 @@ Joy uses a canvas with `(0, 0)` as the center of the canvas.
 
 By default, the size of the canvas is `(300, 300)`.
 
-## Usage
+## Using Joy
 
 The `Joy` library integrates well with Jupyter environment and it is
 recommended to explore Joy in a Jupyter lab.
@@ -31,10 +31,14 @@ from joy import *
 Once the functionality in the module is imported, you can start playing
 with it.
 
+## Basic Shapes
+
+Joy supports the basic shapes `Circle`, `Ellipse`, `Rectangle` and `Line`.
+
 Let's start with a drawing a circle:
 
 ```
-c = circle()
+c = Circle()
 show(c)
 ```
 
@@ -44,49 +48,94 @@ By default circle will have center at `(0, 0)` and radius as `100`. But
 you can specify different values.
 
 ```
-c = circle(cx=50, cy=50, r=50)
+c = circle(center=Point(x=50, y=50), radius=50)
 show(c)
 ```
 
 ![svg](images/circle-2.svg)
 
-The other basic types that are supported are `line` and `rect`.
+The other basic types that are supported are `Ellipse`, `Rectangle`,
+and `Line`:
 
 ```
-c = circle(cx=0, cy=0, r=50)
-r = rect(x=-50, y=-50, width=100, height=100)
-z = line(x1=-50, y1=-50, x2=50, y2=50)
-show(c, r, z)
+s1 = Circle()
+s2 = Ellipse()
+s3 = Rectangle()
+s4 = Line()
+show(s1, s2, s3, s4)
 ```
 
 ![svg](images/basic-shapes.svg)
 
-Joy supports transformations `translate`, `rotate` and `scale`.
+## Combining Shapes
+
+Joy supports `+` operator to join shapes.
 
 ```
-r = rect(x=-50, y=-50, width=100, height=100)
-show(rotate(r, angle=45))
+def donut(x, y, r):
+    c1 = Circle(center=Point(x=x, y=y), radius=r)
+    c2 = Circle(center=Point(x=x, y=y), radius=r/2)
+    return c1+c2
+
+d = donut(0, 0, 100)
+show(d)
 ```
 
+![svg](images/donut.svg)
+
+
+## Transformations
+
+Joy supports `Translate`, `Rotate` and `Scale` transformations.
+Transformations are applied using `|` operator.
+
+```
+shape = Circle(radius=50) | Translate(x=100, y=0)
+show(shape)
+```
+
+![svg](images/circle-translate.svg)
+
+Transformations can be chained too.
+
+```
+r1 = Rectangle()
+r2 = r1 | Rotate(angle=45) | Scale(1/SQRT2)
+show(r1, r2)
+```
 ![svg](images/rect-rotate.svg)
 
-Joy comes with very interesting higher-order transformations. The `cycle`
-function rotates a shape repeatedly.
+## Higer-Order Transformations
+
+Joy supports higher-order transformation `Repeat`.
+
+The `Repeat` transformation applies a transformation multiple times and
+combines all the resulting shapes.
+
+For example, draw 10 circles:
 
 ```
-shape = cycle(line())
+c = Circle(center=Point(x=-100, y=0), radius=50)
+shape = c | Repeat(10, Translate(x=10, y=0)
+show(shape)
+```
+
+![svg](images/ten-circles.svg)
+
+Combined with rotation, it can create amusing patterns.
+
+```
+shape = Line() | Repeat(18, Rotate(angle=10))
 show(shape)
 ```
 
 ![svg](images/cycle-line.svg)
 
-The above example, takes a line and rotates it around the origin `18`
-times and combines all the rotated shapes.
 
-You could cycle a square:
+We could do the same with a square:
 
 ```
-shape = cycle(rect())
+shape = Rectangle() | Repeat(18, Rotate(angle=10))
 show(shape)
 ```
 
@@ -95,18 +144,16 @@ show(shape)
 or a rectangle:
 
 ```
-r = rect(x=-100, y=-50, width=200, height=100)
-shape = cycle(r)
+shape = Rectangle(width=200, height=100) | Repeat(18, Rotate(angle=10))
 show(shape)
 ```
 
 ![svg](images/cycle-rect.svg)
 
-You could even shrink while doing the cycle:
+We can combine multiple transformations and repeat.
 
 ```
-r = rect(width=300, height=300)
-shape = cycle(r, n=72, s=0.92)
+shape = Rectangle(width=300, height=300) | Repeat(72, Rotate(360/72) | Scale(0.92))
 show(shape)
 ```
 
@@ -115,8 +162,8 @@ show(shape)
 You can try the same with a circle too:
 
 ```
-c = circle(cx=100, cy=0, r=50)
-shape = cycle(c, s=0.97, n=36*4, angle=10)
+c = Circle(center=Point(x=100, y=0), radius=50)
+shape = c | Repeat(36*4, Rotate(10) | Scale(0.97))
 show(shape)
 ```
 ![svg](images/circle-spiral.svg)
