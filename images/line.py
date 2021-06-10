@@ -1,5 +1,5 @@
 from joy import *
 from _img import render
 
-s = line()
+s = Line()
 render(s)

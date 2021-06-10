@@ -1,5 +1,6 @@
 from joy import *
 from _img import render
 
-r = rect(x=-50, y=-50, width=100, height=100)
-render(rotate(r, angle=45))
+r1 = Rectangle(width=200, height=200)
+r2 = r1 | Rotate(angle=45) | Scale(1/SQRT2)
+render(r1, r2)
