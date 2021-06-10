@@ -48,7 +48,7 @@ By default circle will have center at `(0, 0)` and radius as `100`. But
 you can specify different values.
 
 ```
-c = circle(center=Point(x=50, y=50), radius=50)
+c = Circle(center=Point(x=50, y=50), radius=50)
 show(c)
 ```
 
