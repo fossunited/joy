@@ -527,7 +527,9 @@ class TransformationList(Transformation):
         return TransformationList(self.transformations + [transformation])
 
     def as_str(self):
-        return " ".join(t.as_str() for t in self.transformations)
+        # Reversing the transformations as SVG applies them in the
+        # reverse order (the right most is appled first)
+        return " ".join(t.as_str() for t in self.transformations[::-1])
 
 class Translate(Transformation):
     """Creates a new Translate transformation that moves a shape by
