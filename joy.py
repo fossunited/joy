@@ -228,8 +228,10 @@ class SVG:
             xmlns="http://www.w3.org/2000/svg") + "\n"
         svg_footer = "</svg>\n"
 
-        nodes = "".join(node._svg(indent="  ") for node in self.nodes)
-        return svg_header + nodes + svg_footer
+        # flip the y axis so that y grows upwards
+        node = Group(self.nodes) | Scale(sx=1, sy=-1)
+
+        return svg_header + node._svg() + svg_footer
 
     def _repr_svg_(self):
         return self.render()
