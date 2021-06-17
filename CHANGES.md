@@ -1,3 +1,7 @@
+## Version 0.2.2 - 2021-06-17
+
+* Added lowercase functions for shapes with simpler API
+
 ## Version 0.2.1 - 2021-06-11
 
 * Made the y value grow upwards, just like the classical cartisian
