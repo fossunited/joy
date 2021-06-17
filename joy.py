@@ -754,3 +754,91 @@ def show(*shapes):
 
     from IPython.display import display
     display(img)
+
+def circle(x=0, y=0, r=100, **kwargs):
+    """Creates a circle with center at (x, y) and radius of r.
+
+    Examples:
+
+    Draw a circle.
+
+        c = circle()
+        show(c)
+
+    Draw a circle with radius 50.
+
+        c = circle(r=50)
+        show(c)
+
+    Draw a circle with center at (10, 20) and a radius of 50.
+
+        c = circle(x=10, y=20, r=50)
+        show(c)
+    """
+    return Circle(center=Point(x=x, y=x), radius=r, **kwargs)
+
+def rectangle(x=0, y=0, w=200, h=100, **kwargs):
+    """Creates a rectangle with center at (x, y), a width of w and a height of h.
+
+    Examples:
+
+    Draw a rectangle.
+
+        r = rectangle()
+        show(r)
+
+    Draw a rectangle with width of 100 and height of 50.
+
+        r = rectangle(w=100, h=50)
+        show(r)
+
+    Draw a rectangle with center at (10, 20), a width of 100 and a height of 50.
+
+        r = rectangle(x=10, y=20, w=100, h=50)
+        show(r)
+    """
+    return Rectangle(center=Point(x=x, y=x), width=w, height=h, **kwargs)
+
+def ellipse(x=0, y=0, w=200, h=100, **kwargs):
+    """Creates a ellipse with center at (x, y), a width of w and a height of h.
+
+    Examples:
+
+    Draw a ellipse.
+
+        r = ellipse()
+        show(r)
+
+    Draw a ellipse with width of 100 and height of 50.
+
+        r = ellipse(w=100, h=50)
+        show(r)
+
+    Draw a ellipse with center at (10, 20), a width of 100 and a height of 50.
+
+        r = ellipse(x=10, y=20, w=100, h=50)
+        show(r)
+    """
+    return Ellipse(center=Point(x=x, y=x), width=w, height=h, **kwargs)
+
+def line(x1=None, y1=None, x2=None, y2=None, **kwargs):
+    """Creates a line from point (x1, y1) to point (x2, y2).
+
+    Examples:
+
+    Draw a line.
+
+        z = line()
+
+    Draw a line from (10, 20) to (100, 200)
+
+        z = line(x1=10, y1=20, x2=100, y2=200)
+    """
+    if x1 is None and y1 is None and x2 is None and y2 is None:
+        x1, y1 = -100, 0
+        x2, y2 = 100, 0
+    else:
+        pairs = dict(x1=x1, y1=y1, x2=x2, y2=y2)
+        missing = [name for name, value in pairs.items() if value is None]
+        if missing:
+            raise Exception("missing arguments for line: ", ", ".join(missing))
