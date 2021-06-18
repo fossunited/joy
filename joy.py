@@ -775,7 +775,7 @@ def circle(x=0, y=0, r=100, **kwargs):
         c = circle(x=10, y=20, r=50)
         show(c)
     """
-    return Circle(center=Point(x=x, y=x), radius=r, **kwargs)
+    return Circle(center=Point(x=x, y=y), radius=r, **kwargs)
 
 def rectangle(x=0, y=0, w=200, h=100, **kwargs):
     """Creates a rectangle with center at (x, y), a width of w and a height of h.
@@ -797,7 +797,7 @@ def rectangle(x=0, y=0, w=200, h=100, **kwargs):
         r = rectangle(x=10, y=20, w=100, h=50)
         show(r)
     """
-    return Rectangle(center=Point(x=x, y=x), width=w, height=h, **kwargs)
+    return Rectangle(center=Point(x=x, y=y), width=w, height=h, **kwargs)
 
 def ellipse(x=0, y=0, w=200, h=100, **kwargs):
     """Creates a ellipse with center at (x, y), a width of w and a height of h.
@@ -819,7 +819,7 @@ def ellipse(x=0, y=0, w=200, h=100, **kwargs):
         r = ellipse(x=10, y=20, w=100, h=50)
         show(r)
     """
-    return Ellipse(center=Point(x=x, y=x), width=w, height=h, **kwargs)
+    return Ellipse(center=Point(x=x, y=y), width=w, height=h, **kwargs)
 
 def line(x1=None, y1=None, x2=None, y2=None, **kwargs):
     """Creates a line from point (x1, y1) to point (x2, y2).
