@@ -1,3 +1,7 @@
+## Version 0.2.3 - 2021-06-19
+
+* Fixed a typo that causing the y coordinate to be initialized to the value of argument `x` instead of `y`.
+
 ## Version 0.2.2 - 2021-06-17
 
 * Added lowercase functions for shapes with simpler API

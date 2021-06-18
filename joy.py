@@ -109,7 +109,7 @@ represented as SVG image by jupyter.
 """
 import html
 
-__version__ = "0.2.2"
+__version__ = "0.2.3"
 __author__ = "Anand Chitipothu <anand@fossunited.org>"
 
 SQRT2 = 2**0.5
