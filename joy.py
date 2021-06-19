@@ -842,3 +842,5 @@ def line(x1=None, y1=None, x2=None, y2=None, **kwargs):
         missing = [name for name, value in pairs.items() if value is None]
         if missing:
             raise Exception("missing arguments for line: ", ", ".join(missing))
+
+    return Line(start=Point(x1, y1), end=Point(x2, y2), **kwargs)
