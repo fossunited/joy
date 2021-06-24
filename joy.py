@@ -844,3 +844,70 @@ def line(x1=None, y1=None, x2=None, y2=None, **kwargs):
             raise Exception("missing arguments for line: ", ", ".join(missing))
 
     return Line(start=Point(x1, y1), end=Point(x2, y2), **kwargs)
+
+def translate(x=0, y=0):
+    """Translates a shape.
+
+    Examples:
+
+    Translate a shape by 10 units in x direction.
+
+        shape = circle() | translate(x=10)
+
+    Translate a shape by 10 units in y direction.
+
+        shape = circle() | translate(y=10)
+
+    Translate a shape by 10 units in x direction and 20 units in y direction.
+
+        shape = circle() | translate(x=10, y=20)
+    """
+    return Translate(x=x, y=y)
+
+def scale(s=None, x=1, y=1):
+    """Scales a shape.
+
+    Examples:
+
+    Scale a shape in both x and y directions:
+
+        shape = circle() | scale(0.5)
+
+    Scale a shape in only in x direction:
+
+        shape = circle() | scale(x=0.5)
+
+    Scale a shape in only in y direction:
+
+        shape = circle() | scale(y=0.5)
+
+    Scale a shape differently in x and y directions:
+
+        shape = circle() | scale(x=0.5, y=0.75)
+    """
+    if s is not None:
+        return Scale(sx=s, sy=s)
+    else:
+        return Scale(sx=x, sy=y)
+
+def rotate(angle):
+    """Rotates a shape.
+
+    Examples:
+
+    Rotate a shape by 30 degrees
+
+        shape = line() | rotate(30)
+    """
+    return Rotate(angle)
+
+def repeat(n, transformation):
+    """Repeats a transformation multiple times on a shape.
+
+    Examples:
+
+    Repeatly rotate a line 9 times by 10 degrees.
+
+        shape = line() | repeat(9, rotate(10))
+    """
+    return Repeat(n, transformation)
