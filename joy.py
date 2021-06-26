@@ -159,7 +159,7 @@ class Shape:
         return attrs
 
     def as_dict(self):
-        d = dict(self.attrs)
+        d = self.get_attrs()
         d['tag'] = self.tag
         if self.children:
             d['children'] = [n.as_dict() for n in self.children]
