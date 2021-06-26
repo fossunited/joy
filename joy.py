@@ -158,6 +158,13 @@ class Shape:
             attrs['transform'] = self.transform.as_str()
         return attrs
 
+    def as_dict(self):
+        d = dict(self.attrs)
+        d['tag'] = self.tag
+        if self.children:
+            d['children'] = [n.as_dict() for n in self.children]
+        return d
+
     def _svg(self, indent="") -> str:
         """Returns the svg representation of this node.
 
