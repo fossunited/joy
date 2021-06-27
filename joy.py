@@ -852,6 +852,25 @@ def line(x1=None, y1=None, x2=None, y2=None, **kwargs):
 
     return Line(start=Point(x1, y1), end=Point(x2, y2), **kwargs)
 
+def point(x, y):
+    """Creates a Point with x and y coordinates.
+    """
+    return Point(x, y)
+
+def polygon(points, **kwargs):
+    """Creates a polygon with given list points.
+
+    Example:
+
+        p1 = point(x=0, y=0)
+        p2 = point(x=100, y=0)
+        p3 = point(x=0, y=100)
+        triangle = polygon([p1, p2, p3])
+        show(triangle)
+    """
+    points_str = " ".join(f"{p.x},{p.y}" for p in points)
+    return Shape(tag="polygon", points=points_str, **kwargs)
+
 def translate(x=0, y=0):
     """Translates a shape.
 
