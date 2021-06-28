@@ -10,7 +10,7 @@ An example of using joy:
 
     >>> from joy import *
     >>>
-    >>> c = Circle(center=Point(x=100, y=100), radius=50)
+    >>> c = circle(x=100, y=100, radius=50)
     >>> show(c)
 
 The `cicle` function creates a new circle and the `show` function
@@ -36,71 +36,59 @@ By default the size of the canvas is (300, 300).
 
 BASIC SHAPES
 
-Joy supports `Circle`, `Rect` and `Line` as basic shapes.
+Joy supports `circle`, `rectangle` and `line` as basic shapes.
 
-    >>> c = Circle(center=Point(x=100, y=100), radius=50)
-    >>> r = Rectangle(center=Point(0, 0), width=200, height=200)
+    >>> c = circle(x=100, y=100, r=50)
+    >>> r = rectangle(x=0, y=0, w=200, h=200)
     >>> show(c, r)
 
 All basic shapes have default values of all the arguments, making it
 easier to start using them.
 
-    >>> c = Circle()
-    >>> r = Rectangle()
-    >>> z = Line()
+    >>> c = circle()
+    >>> r = rectangle()
+    >>> z = line()
     >>> show(c, r, z)
 
 COMBINING SHAPES
 
-The `combine` function is used to combine multiple shapes into a
+The `+` operator is used to combine multiple shapes into a
 single shape.
 
-    >>> shape = combine(Circle(), Rect())
+    >>> shape = circle() + rectangle()
     >>> show(shape)
 
 TRANSFORMATIONS
 
-Joy supports `Translate`, `Rotate` and `Scale` transformations.
+Joy supports `translate`, `rotate` and `scale` transformations.
 
-The `Translate` transformation moves the given shape by `x` and `y`.
+The `translate` transformation moves the given shape by `x` and `y`.
 
-    >>> c1 = Circle(radius=50)
-    >>> c2 = c1 | Translate(x=100, y=0)
+    >>> c1 = circle(r=50)
+    >>> c2 = c1 | translate(x=100, y=0)
     >>> show(c1, c2)
 
 As you've seen the above example, transformations are applied using
 the `|` operator.
 
-The `Rotate` transformation rotates a shape clockwise by the specified
+The `Rotate` transformation rotates a shape anti-clockwise by the specified
 angle.
 
-    >>> shape = Rectangle() | Rotate(angle=45)
-    >>> show(shape)
-
-By default the `rotate` function rotates the shape around the origin.
-However, it is also possible to specify the anchor point for rotation.
-
-    >>> shape = Rectangle() | Rotate(angle=45, anchor=Point(x=100, y=100))
+    >>> shape = rectangle() | rotate(angle=45)
     >>> show(shape)
 
 The `Scale` transformation scales a shape.
 
-    >>> shape = Circle() | Scale(sx=1, sy=0.5)
+    >>> shape = circle() | scale(x=1, y=0.5)
     >>> show(shape)
 
 HIGER ORDER TRANSFORMATIONS
 
-Joy supports a transorm called `Cycle` to rotate a shape multiple times
-with angle from 0 to 360 degrees and combining all the resulting shapes.
+Joy supports a transorm called `repeat` to apply a transformation multiple times
+and combining all the resulting shapes.
 
-    >>> flower = Rectangle() | Cycle()
+    >>> flower = rectangle() | repeat(18, rotate(10))
     >>> show(flower)
-
-By default, `Cycle` repeats the rotation for `18` times, however that can be
-customizing by specifying the parameter `n`.
-
-    >>> shape = rect() | Cycle(n=3)
-    >>> show(shape)
 
 JUPYTER LAB INTEGRATION
 

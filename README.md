@@ -33,12 +33,12 @@ with it.
 
 ## Basic Shapes
 
-Joy supports the basic shapes `Circle`, `Ellipse`, `Rectangle` and `Line`.
+Joy supports the basic shapes `circle`, `ellipse`, `rectangle` and `line`.
 
 Let's start with a drawing a circle:
 
 ```
-c = Circle()
+c = circle()
 show(c)
 ```
 
@@ -48,20 +48,20 @@ By default circle will have center at `(0, 0)` and radius as `100`. But
 you can specify different values.
 
 ```
-c = Circle(center=Point(x=50, y=50), radius=50)
+c = circle(x=50, y=50, r=50)
 show(c)
 ```
 
 ![svg](images/circle-2.svg)
 
-The other basic types that are supported are `Ellipse`, `Rectangle`,
-and `Line`:
+The other basic types that are supported are `ellipse`, `rectangle`,
+and `line`:
 
 ```
-s1 = Circle()
-s2 = Ellipse()
-s3 = Rectangle()
-s4 = Line()
+s1 = circle()
+s2 = ellipse()
+s3 = rectangle()
+s4 = line()
 show(s1, s2, s3, s4)
 ```
 
@@ -73,8 +73,8 @@ Joy supports `+` operator to join shapes.
 
 ```
 def donut(x, y, r):
-    c1 = Circle(center=Point(x=x, y=y), radius=r)
-    c2 = Circle(center=Point(x=x, y=y), radius=r/2)
+    c1 = circle(x=x, y=y, r=r)
+    c2 = circle(x=x, y=y, r=r/2)
     return c1+c2
 
 d = donut(0, 0, 100)
@@ -86,11 +86,11 @@ show(d)
 
 ## Transformations
 
-Joy supports `Translate`, `Rotate` and `Scale` transformations.
+Joy supports `translate`, `totate` and `scale` transformations.
 Transformations are applied using `|` operator.
 
 ```
-shape = Circle(radius=50) | Translate(x=100, y=0)
+shape = circle(r=50) | translate(x=100, y=0)
 show(shape)
 ```
 
@@ -99,23 +99,23 @@ show(shape)
 Transformations can be chained too.
 
 ```
-r1 = Rectangle(width=200, height=200)
-r2 = r1 | Rotate(angle=45) | Scale(1/SQRT2)
+r1 = rectangle(w=200, h=200)
+r2 = r1 | rotate(angle=45) | scale(1/SQRT2)
 show(r1, r2)
 ```
 ![svg](images/rect-rotate.svg)
 
 ## Higer-Order Transformations
 
-Joy supports higher-order transformation `Repeat`.
+Joy supports higher-order transformation `repeat`.
 
-The `Repeat` transformation applies a transformation multiple times and
+The `repeat` transformation applies a transformation multiple times and
 combines all the resulting shapes.
 
 For example, draw 10 circles:
 
 ```
-c = Circle(center=Point(x=-100, y=0), radius=50)
+c = circle(x=-100, y=0, r=50)
 shape = c | Repeat(10, Translate(x=10, y=0)
 show(shape)
 ```
@@ -125,7 +125,7 @@ show(shape)
 Combined with rotation, it can create amusing patterns.
 
 ```
-shape = Line() | Repeat(18, Rotate(angle=10))
+shape = line() | repeat(18, rotate(angle=10))
 show(shape)
 ```
 
@@ -135,7 +135,7 @@ show(shape)
 We could do the same with a square:
 
 ```
-shape = Rectangle(width=200, height=200) | Repeat(18, Rotate(angle=10))
+shape = rectangle(w=200, h=200) | repeat(18, rotate(angle=10))
 show(shape)
 ```
 
@@ -144,7 +144,7 @@ show(shape)
 or a rectangle:
 
 ```
-shape = Rectangle(width=200, height=100) | Repeat(18, Rotate(angle=10))
+shape = rectangle(w=200, h=100) | repeat(18, rotate(angle=10))
 show(shape)
 ```
 
@@ -153,7 +153,7 @@ show(shape)
 We can combine multiple transformations and repeat.
 
 ```
-shape = Rectangle(width=300, height=300) | Repeat(72, Rotate(360/72) | Scale(0.92))
+shape = rectangle(w=300, h=300) | repeat(72, rotate(360/72) | scale(0.92))
 show(shape)
 ```
 
@@ -162,8 +162,8 @@ show(shape)
 You can try the same with a circle too:
 
 ```
-c = Circle(center=Point(x=100, y=0), radius=50)
-shape = c | Repeat(36*4, Rotate(10) | Scale(0.97))
+c = circle(x=100, y=0, radius=50)
+shape = c | repeat(36*4, rotate(10) | scale(0.97))
 show(shape)
 ```
 ![svg](images/circle-spiral.svg)
