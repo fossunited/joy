@@ -647,11 +647,14 @@ class Repeat(Transformation):
         self.transformation = transformation
 
     def apply(self, shape):
-        shapes = [shape]
-        for i in range(self.n-1):
-            shape = self.transformation.apply(shape)
-            shapes.append(shape)
-        return Group(shapes)
+        return self._apply(shape, self.transformation, self.n)
+
+    def _apply(self, shape, tf, n):
+        if n == 1:
+            return shape
+        else:
+            result = self._apply(shape, tf, n-1) | tf
+            return shape + result
 
 class Cycle(Transformation):
     """
