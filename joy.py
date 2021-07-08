@@ -938,3 +938,19 @@ def combine(shapes):
         >>> show(shape)
     """
     return Group(shapes)
+
+def color(r, g, b, a=None):
+    """Creates a color with given r g b values.
+
+    Parameters:
+
+    r - the red component of the color, allowed range is 0-255.
+    g - the green component of the color, allowed range is 0-255.
+    b - the blue component of the color, allowed range is 0-255.
+    a - optional argument to indicate the transparency or the
+        alpha value. The allowed range is 0-1.
+    """
+    if a is None:
+        return f"rgb({r}, {g}, {b})"
+    else:
+        return f"rgb({r}, {g}, {b}, {a})"
