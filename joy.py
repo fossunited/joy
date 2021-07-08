@@ -928,3 +928,13 @@ def repeat(n, transformation):
         shape = line() | repeat(9, rotate(10))
     """
     return Repeat(n, transformation)
+
+def combine(shapes):
+    """The combine function combines a list of shapes into a single shape.
+
+    Example:
+        >>> shapes = [circle(r=50), circle(r=100), circle(r=150)]
+        >>> shape = combine(shapes)
+        >>> show(shape)
+    """
+    return Group(shapes)
