@@ -96,6 +96,7 @@ Joy integrates very well with Jupyter notebooks and every shape is
 represented as SVG image by jupyter.
 """
 import html
+import random as random_module
 
 __version__ = "0.2.3"
 __author__ = "Anand Chitipothu <anand@fossunited.org>"
@@ -945,3 +946,29 @@ def color(r, g, b, a=None):
         return f"rgb({r}, {g}, {b})"
     else:
         return f"rgb({r}, {g}, {b}, {a})"
+
+def random(a=None, b=None):
+    """Creates a random number.
+
+    The random function can be used in three ways:
+
+        random() # returns a random number between 0 and 1
+        random(n) # returns a random number between 0 and n
+        random(n1, n2) # returns a random number between n1 and n2
+
+    Examples:
+
+        >>> random()
+        0.4336206360591218
+        >>> random(10)
+        1.436301598755494
+        >>> random(5, 10)
+        7.471950621969087
+    """
+    if a is None and b is None:
+        return random_module.random()
+    elif a is not None and b is None:
+        return a * random_module.random()
+    else:
+        delta = b - a
+        return a + delta * random_module.random()
