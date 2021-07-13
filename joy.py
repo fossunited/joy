@@ -490,15 +490,6 @@ def render_tag(tag, *, close=False, **attrs):
     else:
         return f"<{tag}{end}"
 
-def combine(*shapes):
-    """Combines multiple shapes in to a single shape by overlaying all
-    the shapes.
-
-        >>> shape = combine(circle(), rect())
-        >>> show(shape)
-    """
-    return Group(shapes)
-
 class Transformation:
     def apply(self, shape):
         return shape.apply_transform(self)
