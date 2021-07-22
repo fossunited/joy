@@ -86,7 +86,7 @@ show(d)
 
 ## Transformations
 
-Joy supports `translate`, `totate` and `scale` transformations.
+Joy supports `translate`, `rotate` and `scale` transformations.
 Transformations are applied using `|` operator.
 
 ```
