@@ -1,3 +1,12 @@
+## Unreleased
+
+* Added new functions combine, color and random
+* Added polygon shape
+* Added as_dict method to Shape to be able to serialize the shapes to JSON
+* Added lowercase function names for transformations.
+* Improved the repeat tranformation
+* Fixed the issues with `line` function
+
 ## Version 0.2.3 - 2021-06-19
 
 * Fixed a typo that causing the y coordinate to be initialized to the value of argument `x` instead of `y`.

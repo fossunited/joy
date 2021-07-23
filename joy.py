@@ -945,7 +945,7 @@ def color(r, g, b, a=None):
     if a is None:
         return f"rgb({r}, {g}, {b})"
     else:
-        return f"rgb({r}, {g}, {b}, {a})"
+        return f"rgba({r}, {g}, {b}, {a})"
 
 def random(a=None, b=None):
     """Creates a random number.
