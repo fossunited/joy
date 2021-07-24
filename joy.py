@@ -854,6 +854,21 @@ def polygon(points, **kwargs):
     points_str = " ".join(f"{p.x},{p.y}" for p in points)
     return Shape(tag="polygon", points=points_str, **kwargs)
 
+def polyline(points, **kwargs):
+    """Creates a polyline with given list points.
+
+    Example:
+
+        p1 = point(x=-50, y=50)
+        p2 = point(x=0, y=-25)
+        p3 = point(x=0, y=25)
+        p4 = point(x=50, y=-50)
+        line = polyline([p1, p2, p3, p4])
+        show(line)
+    """
+    points_str = " ".join(f"{p.x},{p.y}" for p in points)
+    return Shape(tag="polyline", points=points_str, **kwargs)
+
 def translate(x=0, y=0):
     """Translates a shape.
 
