@@ -119,6 +119,13 @@ class Shape:
         self.attrs = attrs
         self.transform = None
 
+    def get_reference(self):
+        if not "id" in self.attrs:
+            self.attrs["id"] = f"shape{id(self)}"
+
+        attrs = {"xlink:href": "#" + self.id}
+        return Shape("use", **attrs)
+
     def __repr__(self):
         return f"<{self.tag} {self.attrs}>"
 
@@ -214,14 +221,17 @@ class SVG:
         self.height = height
 
     def render(self):
-        svg_header = render_tag(
-            tag="svg",
-            width=self.width,
-            height=self.height,
-            viewBox=f"-{self.width//2} -{self.height//2} {self.width} {self.height}",
-            fill="none",
-            stroke="black",
-            xmlns="http://www.w3.org/2000/svg") + "\n"
+        attrs = {
+            "tag": "svg",
+            "width": self.width,
+            "height": self.height,
+            "viewBox": f"-{self.width//2} -{self.height//2} {self.width} {self.height}",
+            "fill": "none",
+            "stroke": "black",
+            "xmlns": "http://www.w3.org/2000/svg",
+            "xmlns:xlink": "http://www.w3.org/1999/xlink"
+        }
+        svg_header = render_tag(**attrs)+ "\n"
         svg_footer = "</svg>\n"
 
         # flip the y axis so that y grows upwards
@@ -639,7 +649,10 @@ class Repeat(Transformation):
         self.transformation = transformation
 
     def apply(self, shape):
-        return self._apply(shape, self.transformation, self.n)
+        ref = shape.get_reference()
+        defs = Shape("defs", children=[shape])
+
+        return defs + self._apply(ref, self.transformation, self.n)
 
     def _apply(self, shape, tf, n):
         if n == 1:
