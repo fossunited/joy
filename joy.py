@@ -424,6 +424,77 @@ class Rectangle(Shape):
             **kwargs)
 
 
+class Path(Shape):
+    """  !!!WARNING!!!
+    Case sensitive function.
+    X-----------------------X
+    allows you to draw any shape in any way possible(modified polyline)
+
+
+    Parameters:
+        d:
+        its the function that defines how the line shall move
+
+    Tutorial:
+
+        I recommend reading "https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths"
+        but for the lazy people, here's a TL;DR:-->
+        (no need of commas between the different points being defined).
+
+        starting point:
+            Always start with M x y (no commas) where x and y are the x and y co-ordinates of the starting point.
+
+        Straight lines:
+            L x y is the destination point with x and y being the x and y co-ordinates of the ending point.
+            l dx dy can also be used but is not recommended.
+
+            H x can be used when it is a horizontal line with x being the x co-ordinates of the destination point.
+            h dx can also be used where dx is the change in the x co-ordinates.
+
+            V y can be used when it is a vertical line line with y being the y co-ordinates of the destination point.
+            v dy can also be used where dy is the change in the y co-ordinates.
+
+            Z or z can be used to connect wherever you currently are to the starting point.
+
+        Curves:
+            For complex curves red up "https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths#b%C3%A9zier_curves",
+            I do not recommend using Bézier Curves.
+
+            I recommend using these, it's pretty hard to understand at first(tbh it still is).
+            ----Arcs---
+            A rx ry x-axis-rotation large-arc-flag sweep-flag x y
+            (or)
+            a rx ry x-axis-rotation large-arc-flag sweep-flag dx dy
+
+            tbh I still don't understand large-arc-flag and sweep-flag.  (leaving both of them at 1 seems to make anti-clockwise figures work)
+            rx is the width or x-axis radius of the curve you're drawing.
+            ry is the height or y-axis radius of the curve you're drawing.
+            x-axis-rotation defines how rotated the curve figure is(it wont affect circles no matter what value you assign)
+            (this turns ellipses tho).
+            large-arc-flag ?.
+            sweep-flag?.
+            x or dx is the x co-ordinate of the ending point of the curve or the distance of the destination point from the starting point.
+            y or dy is the y co-ordinate of the ending point of the curve or the distance of the destination point from the starting point.
+
+    Examples:
+        to make an eliptical curve between a disjointed line
+
+            >>> a = Path(d="M -150 -150 L 0 -100 A 50 100 0 1 1 -50 0 L -150 150 Z", fill="blue")
+
+            >>> show(a)
+
+    """
+
+    def __init__(self, d=0, **kwargs):
+        self.d = d
+
+        super().__init__(
+            tag="path",
+            d=d,
+            **kwargs
+        )
+
+
 class CSection(Shape):
     """  !!! WARNING !!!
     Case sensitive function.
@@ -447,13 +518,13 @@ class CSection(Shape):
 
     Draw a Semicircle:
 
-        >>> Semicircle = CSection(x1=0,y1=100,x2=0,y2=-100,cx=0,cy=0,fill="#000000")
+        >>> Semicircle = CSection(x1=0,y1=100,x2=0,y2=-100,r=100, angle=0,cx=0,cy=0,fill="#000000")
         >>> show(Semicircle)
 
     Draw a Pacman:
 
-        >>> Semicircle = CSection(x1=0,y1=-100,x2=-100,y2=0,cx=0,cy=0,fill="#000000")
-        >>> show(Semicircle)
+        >>> Pacman = CSection(x1=0,y1=-100,x2=-100,y2=0,r=100,angle=0,cx=0,cy=0,fill="#FFFF00") | rotate(135)
+        >>> show(Pacman)
     """
     def __init__(self, x1, y1, x2, y2, r, angle, cx, cy, d=0, **kwargs):
         self.x1, self.y1, self.x2, self.y2, self.r, self.angle, self.cx, self.cy, self.d = x1, y1, x2, y2, r, angle, cx, cy, d
@@ -461,7 +532,7 @@ class CSection(Shape):
         d = "M " + str(x1) + " " + str(y1) + " A " + str(r) + " " + str(r) + " , " + str(angle) + " , 1 , 1 , " + str(x2) + " " + str(y2) + " L " + str(cx) + " " + str(cy) + " Z"
 
         super().__init__(
-            tag="csection",
+            tag="path",
             d=d,
             x1=x1,
             y1=y1,
@@ -502,7 +573,7 @@ class SemiCircle(Shape):
         d = "M " + str(0) + " " + str(-r) + " A " + str(r) + " " + str(r) + " , " + str(0) + " , 1 , 1 , " + str(0) + " " + str(r) + " L " + str(0) + " " + str(0) + " Z"
 
         super().__init__(
-            tag="csection",
+            tag="path",
             d=d,
             r=r,
             **kwargs)
