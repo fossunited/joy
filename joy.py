@@ -450,7 +450,7 @@ class CSection(Shape):
         >>> Semicircle = CSection(x1=0,y1=100,x2=0,y2=-100,cx=0,cy=0,fill="#000000")
         >>> show(Semicircle)
 
-    Draw a Pacman.
+    Draw a Pacman:
 
         >>> Semicircle = CSection(x1=0,y1=-100,x2=-100,y2=0,cx=0,cy=0,fill="#000000")
         >>> show(Semicircle)
@@ -471,6 +471,40 @@ class CSection(Shape):
             angle=angle,
             cx=cx,
             cy=cy,
+            **kwargs)
+
+
+class SemiCircle(Shape):
+    """  !!! WARNING !!!
+    Case sensitive function.
+    X-----------------------X
+    Creates a Semicircle in Anticlockwise Direction.
+
+    Parameters:
+        r:
+            The radius of the circle.
+
+    Examples:
+
+    Draw a Semicircle:
+
+        >>> Semicircle = SemiCircle(100,fill="#000000")
+        >>> show(Semicircle)
+
+    Draw an off axis semi circle:
+
+        >>> Semicircle = SemiCircle(100, fill="#000000") | translate(x=25,y=0)
+        >>> show(Semicircle)
+    """
+    def __init__(self, r, d=0, **kwargs):
+        self.r, self.d = r,d
+
+        d = "M " + str(0) + " " + str(-r) + " A " + str(r) + " " + str(r) + " , " + str(0) + " , 1 , 1 , " + str(0) + " " + str(r) + " L " + str(0) + " " + str(0) + " Z"
+
+        super().__init__(
+            tag="csection",
+            d=d,
+            r=r,
             **kwargs)
 
 
