@@ -424,21 +424,50 @@ class Rectangle(Shape):
             **kwargs)
 
 
-class Path(Shape):
-    def __init__(self, d, x1, y1, x2, y2, w, h, angle, cx, cy, **kwargs):
-        self.x1, self.y1, self.x2, self.y2, self.w, self.h, self.angle, self.cx, self.cy, self.d = x1, y1, x2, y2, w, h, angle, cx, cy, d
+class CSection(Shape):
+    """  !!! WARNING !!!
+    Case sensitive function.
+    X-----------------------X
+    Creates a Section of circle in Anticlockwise Direction.
 
-        d = "M " + str(x1) + " " + str(y1) + " A " + str(w) + " " + str(h) + " , " + str(angle) + " , 1 , 1 , " + str(x2) + " " + str(y2) + " L " + str(cx) + " " + str(cy) + " Z"
+    Parameters:
+        x1,y1:
+            The starting point of the curve.
+
+        x2,y2:
+            The ending point of the curve.
+
+        r:
+            The radius of the circle.
+
+        cx,cy:
+            The center point of the curve.
+
+    Examples:
+
+    Draw a Semicircle:
+
+        >>> Semicircle = CSection(x1=0,y1=100,x2=0,y2=-100,cx=0,cy=0,fill="#000000")
+        >>> show(Semicircle)
+
+    Draw a Pacman.
+
+        >>> Semicircle = CSection(x1=0,y1=-100,x2=-100,y2=0,cx=0,cy=0,fill="#000000")
+        >>> show(Semicircle)
+    """
+    def __init__(self, x1, y1, x2, y2, r, angle, cx, cy, d=0, **kwargs):
+        self.x1, self.y1, self.x2, self.y2, self.r, self.angle, self.cx, self.cy, self.d = x1, y1, x2, y2, r, angle, cx, cy, d
+
+        d = "M " + str(x1) + " " + str(y1) + " A " + str(r) + " " + str(r) + " , " + str(angle) + " , 1 , 1 , " + str(x2) + " " + str(y2) + " L " + str(cx) + " " + str(cy) + " Z"
 
         super().__init__(
-            tag="path",
+            tag="csection",
             d=d,
             x1=x1,
             y1=y1,
             x2=x2,
             y2=y2,
-            w=w,
-            h=h,
+            r=r,
             angle=angle,
             cx=cx,
             cy=cy,
