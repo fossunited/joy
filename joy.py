@@ -428,7 +428,7 @@ class Path(Shape):
     def __init__(self, d, x1, y1, x2, y2, w, h, angle, cx, cy, **kwargs):
         self.x1, self.y1, self.x2, self.y2, self.w, self.h, self.angle, self.cx, self.cy, self.d = x1, y1, x2, y2, w, h, angle, cx, cy, d
 
-        d = "M " + str(x1) + " " + str(y1) + " A " + str(w) + " " + str(h) + " " + str(angle) + " 1 1 " + str(x2) + " " + str(y2) + " L " + str(cx) + " " + str(cy) + " Z"
+        d = "M " + str(x1) + " " + str(y1) + " A " + str(w) + " " + str(h) + " , " + str(angle) + " , 1 , 1 , " + str(x2) + " " + str(y2) + " L " + str(cx) + " " + str(cy) + " Z"
 
         super().__init__(
             tag="path",
