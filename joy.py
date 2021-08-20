@@ -96,12 +96,18 @@ Joy integrates very well with Jupyter notebooks and every shape is
 represented as SVG image by jupyter.
 """
 import html
+import itertools
 import random as random_module
 
 __version__ = "0.2.3"
 __author__ = "Anand Chitipothu <anand@fossunited.org>"
 
 SQRT2 = 2**0.5
+
+def shape_sequence():
+    return (f"s-{i}" for i in itertools.count())
+
+shape_seq = shape_sequence()
 
 class Shape:
     """Shape is the base class for all shapes in Joy.
@@ -121,7 +127,7 @@ class Shape:
 
     def get_reference(self):
         if not "id" in self.attrs:
-            self.attrs["id"] = f"shape{id(self)}"
+            self.attrs["id"] = next(shape_seq)
 
         attrs = {"xlink:href": "#" + self.id}
         return Shape("use", **attrs)
