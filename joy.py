@@ -10,15 +10,15 @@ An example of using joy:
 
     >>> from joy import *
     >>>
-    >>> c = circle(x=100, y=100, radius=50)
+    >>> c = circle(x=100, y=100, r=50)
     >>> show(c)
 
-The `cicle` function creates a new circle and the `show` function
-displys it.
+The `circle` function creates a new circle and the `show` function
+displays it.
 
 PRINCIPLES
 
-Joy follows functional programming approach for it's interface. Each
+Joy follows functional programming approach for its interface. Each
 function/class gives a shape and those shapes can be transformed and
 combined using other utililty functions.
 
