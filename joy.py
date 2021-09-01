@@ -98,16 +98,19 @@ represented as SVG image by jupyter.
 import html
 import itertools
 import random as random_module
+from typing import Any, Dict, Generator, List, Optional, Sequence, Union
 
 __version__ = "0.2.3"
 __author__ = "Anand Chitipothu <anand@fossunited.org>"
 
 SQRT2 = 2**0.5
 
-def shape_sequence():
+def shape_sequence() -> Generator[str, None, None]:
     return (f"s-{i}" for i in itertools.count())
 
 shape_seq = shape_sequence()
+
+Attr = Union[str, float]
 
 class Shape:
     """Shape is the base class for all shapes in Joy.
@@ -117,31 +120,34 @@ class Shape:
     Typically, users do not interact with this class directly, but use it
     through it's subclasses.
     """
-    def __init__(self, tag, children=None, transform=None, **attrs):
-        """Creates a new shape.
-        """
+    def __init__(
+            self,
+            tag: str,
+            **attrs: Attr) -> None:
+        """Creates a new shape."""
         self.tag = tag
-        self.children = children
         self.attrs = attrs
-        self.transform = None
+        self.transform: Optional['Transformation'] = None
+        self.children: Optional[List['Shape']] = None
 
-    def get_reference(self):
+
+    def get_reference(self) -> 'Shape':
         if not "id" in self.attrs:
             self.attrs["id"] = next(shape_seq)
 
-        attrs = {"xlink:href": "#" + self.id}
+        attrs = {"xlink:href": "#" + str(self.id)}
         return Shape("use", **attrs)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<{self.tag} {self.attrs}>"
 
-    def __getattr__(self, name):
+    def __getattr__(self, name: str) -> Attr:
         if not name.startswith("_") and name in self.attrs:
             return self.attrs[name]
         else:
             raise AttributeError(name)
 
-    def apply_transform(self, transform):
+    def apply_transform(self, transform: Optional['Transformation']) -> 'Shape':
         if self.transform is not None:
             transform = self.transform | transform
 
@@ -149,25 +155,25 @@ class Shape:
         shape.transform = transform
         return shape
 
-    def clone(self):
-        shape = object.__new__(self.__class__)
+    def clone(self) -> 'Shape':
+        shape: Shape = object.__new__(self.__class__)
         shape.__dict__.update(self.__dict__)
         return shape
 
-    def get_attrs(self):
+    def get_attrs(self) -> Dict[str, Attr]:
         attrs = dict(self.attrs)
         if self.transform:
             attrs['transform'] = self.transform.as_str()
         return attrs
 
-    def as_dict(self):
-        d = self.get_attrs()
+    def as_dict(self) -> Dict[str, Any]:
+        d: Dict[str, Any] = self.get_attrs()
         d['tag'] = self.tag
         if self.children:
             d['children'] = [n.as_dict() for n in self.children]
         return d
 
-    def _svg(self, indent="") -> str:
+    def _svg(self, indent: str = "") -> str:
         """Returns the svg representation of this node.
 
         This method is used to recursively construct the svg of a node
@@ -189,7 +195,7 @@ class Shape:
             tag_text = render_tag(self.tag, **attrs, close=True)
             return indent + tag_text + "\n"
 
-    def as_svg(self, width=300, height=300) -> str:
+    def as_svg(self, width: float = 300, height: float = 300) -> str:
         """Renders this node as svg image.
 
         The svg image is assumed to be of size (300, 300) unless the
@@ -205,12 +211,12 @@ class Shape:
         """
         return SVG([self], width=width, height=height).render()
 
-    def __add__(self, shape):
+    def __add__(self, shape: object) -> 'Group':
         if not isinstance(shape, Shape):
             return NotImplemented
         return Group([self, shape])
 
-    def _repr_svg_(self):
+    def _repr_svg_(self) -> str:
         """Returns the svg representation of this node.
 
         This method is called by Juputer to render this object as an
@@ -221,14 +227,13 @@ class Shape:
 class SVG:
     """SVG renders any svg element into an svg image.
     """
-    def __init__(self, nodes, width=300, height=300):
+    def __init__(self, nodes: List[Shape], width: float = 300, height: float = 300) -> None:
         self.nodes = nodes
         self.width = width
         self.height = height
 
-    def render(self):
-        attrs = {
-            "tag": "svg",
+    def render(self) -> str:
+        attrs: Dict[str, Attr] = {
             "width": self.width,
             "height": self.height,
             "viewBox": f"-{self.width//2} -{self.height//2} {self.width} {self.height}",
@@ -237,7 +242,7 @@ class SVG:
             "xmlns": "http://www.w3.org/2000/svg",
             "xmlns:xlink": "http://www.w3.org/1999/xlink"
         }
-        svg_header = render_tag(**attrs)+ "\n"
+        svg_header = render_tag('svg', close=False, **attrs)+ "\n"
         svg_footer = "</svg>\n"
 
         # flip the y axis so that y grows upwards
@@ -245,13 +250,13 @@ class SVG:
 
         return svg_header + node._svg() + svg_footer
 
-    def _repr_svg_(self):
+    def _repr_svg_(self) -> str:
         return self.render()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.render()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "SVG:{self.nodes}"
 
 class Point:
@@ -262,16 +267,16 @@ class Point:
 
         >>> p = Point(x=100, y=50)
     """
-    def __init__(self, x, y):
+    def __init__(self, x: float, y: float) -> None:
         self.x = x
         self.y = y
 
-    def __eq__(self, p):
+    def __eq__(self, p: object) -> bool:
         return isinstance(p, Point) \
             and p.x == self.x \
             and p.y == self.y
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Point({self.x}, {self.y})"
 
 class Circle(Shape):
@@ -306,12 +311,13 @@ class Circle(Shape):
     When no arguments are specified, it uses (0, 0) as the center and
     100 as the radius.
     """
-    def __init__(self, center=Point(0, 0), radius=100, **kwargs):
+    def __init__(self, center: Point = Point(0, 0), radius: float = 100, **kwargs: Attr) -> None:
         self.center = center
         self.radius = radius
 
         cx, cy = self.center.x, self.center.y
-        super().__init__("circle",
+        super().__init__(
+            tag="circle",
             cx=cx,
             cy=cy,
             r=self.radius,
@@ -351,7 +357,12 @@ class Ellipse(Shape):
         >>> r = Ellipse(center=Point(x=100, y=100), width=200, height=100)
         >>> show(r)
     """
-    def __init__(self, center=Point(0, 0), width=200, height=100, **kwargs):
+    def __init__(
+            self,
+            center: Point = Point(0, 0),
+            width: float = 200,
+            height: float = 100,
+            **kwargs: Attr) -> None:
         self.center = center
         self.width = width
         self.height = height
@@ -401,7 +412,12 @@ class Rectangle(Shape):
         >>> r = Rectangle(center=Point(x=100, y=100), width=200, height=100)
         >>> show(r)
     """
-    def __init__(self, center=Point(0, 0), width=200, height=100, **kwargs):
+    def __init__(
+            self,
+            center: Point = Point(0, 0),
+            width: float = 200,
+            height: float = 100,
+            **kwargs: Attr) -> None:
         self.center = center
         self.width = width
         self.height = height
@@ -441,7 +457,11 @@ class Line(Shape):
         >>> z = line(start=Point(x=0, y=0), end=Point(x=100, y=50))
         >>> show(z)
     """
-    def __init__(self, start=Point(-100, 0), end=Point(100, 0), **kwargs):
+    def __init__(
+            self,
+            start: Point = Point(-100, 0),
+            end: Point = Point(100, 0),
+            **kwargs: Attr) -> None:
         self.start = start
         self.end = end
 
@@ -478,10 +498,11 @@ class Group(Shape):
         >>> shape = Circle() + Rectangle()
         >>> show(shape)
     """
-    def __init__(self, shapes, **kwargs):
-        super().__init__("g", children=shapes, **kwargs)
+    def __init__(self, shapes: List[Shape], **kwargs: Attr) -> None:
+        super().__init__("g", **kwargs)
+        self.children = shapes
 
-def render_tag(tag, *, close=False, **attrs):
+def render_tag(tag: str, close: bool = False, **attrs: Attr) -> str:
     """Renders a html/svg tag.
 
         >>> render_tag("circle", cx=0, cy=0, r=10)
@@ -508,30 +529,33 @@ def render_tag(tag, *, close=False, **attrs):
         return f"<{tag}{end}"
 
 class Transformation:
-    def apply(self, shape):
+    def apply(self, shape: Shape) -> 'Shape':
         return shape.apply_transform(self)
 
-    def join(self, transformation):
+    def join(self, transformation: 'Transformation') -> 'TransformationList':
         return TransformationList([self, transformation])
 
-    def __or__(self, right):
+    def __or__(self, right: object) -> 'TransformationList':
         if not isinstance(right, Transformation):
             return NotImplemented
         return self.join(transformation=right)
 
-    def __ror__(self, left):
+    def __ror__(self, left: object) -> 'Shape':
         if not isinstance(left, Shape):
             return NotImplemented
         return self.apply(shape=left)
 
+    def as_str(self) -> str:
+        return NotImplemented
+
 class TransformationList(Transformation):
-    def __init__(self, transformations):
+    def __init__(self, transformations: List[Transformation]) -> None:
         self.transformations = transformations
 
-    def join(self, transformation):
+    def join(self, transformation: Transformation) -> 'TransformationList':
         return TransformationList(self.transformations + [transformation])
 
-    def as_str(self):
+    def as_str(self) -> str:
         # Reversing the transformations as SVG applies them in the
         # reverse order (the right most is appled first)
         return " ".join(t.as_str() for t in self.transformations[::-1])
@@ -554,11 +578,11 @@ class Translate(Transformation):
         >>> c = Circle() | Translate(100, 50)
         >>> show(c)
     """
-    def __init__(self, x, y):
+    def __init__(self, x: float, y: float):
         self.x = x
         self.y = y
 
-    def as_str(self):
+    def as_str(self) -> str:
         return f"translate({self.x} {self.y})"
 
 class Rotate(Transformation):
@@ -590,11 +614,11 @@ class Rotate(Transformation):
         >>> shape = combine(r1, r2)
         >>> show(shape)
     """
-    def __init__(self, angle, anchor=Point(0, 0)):
+    def __init__(self, angle: float, anchor: Point = Point(0, 0)) -> None:
         self.angle = angle
         self.anchor = anchor
 
-    def as_str(self):
+    def as_str(self) -> str:
         origin = Point(0, 0)
         if self.anchor == origin:
             return f"rotate({self.angle})"
@@ -612,13 +636,13 @@ class Scale(Transformation):
             The scale factor in the y direction. Defaults to
             the value of sx if not provided.
     """
-    def __init__(self, sx, sy=None):
+    def __init__(self, sx: float, sy: Optional[float] = None) -> None:
         if sy is None:
             sy = sx
         self.sx = sx
         self.sy = sy
 
-    def as_str(self):
+    def as_str(self) -> str:
         return f"scale({self.sx} {self.sy})"
 
 class Repeat(Transformation):
@@ -650,17 +674,18 @@ class Repeat(Transformation):
         >>> shape = Line() | Repeat(18, Rotate(angle=10) | Scale(sx=0.9))
         >>> show(shape)
     """
-    def __init__(self, n, transformation):
+    def __init__(self, n: int, transformation: Transformation) -> None:
         self.n = n
         self.transformation = transformation
 
-    def apply(self, shape):
+    def apply(self, shape: Shape) -> Group:
         ref = shape.get_reference()
-        defs = Shape("defs", children=[shape])
+        defs = Shape("defs")
+        self.children = [shape]
 
         return defs + self._apply(ref, self.transformation, self.n)
 
-    def _apply(self, shape, tf, n):
+    def _apply(self, shape: Shape, tf: Transformation, n: int) -> Union[Shape, TransformationList]:
         if n == 1:
             return shape
         else:
@@ -718,19 +743,24 @@ class Cycle(Transformation):
         >>> shape = Rectangle(width=300, height=300) | cycle(n=72, s=0.92)
         >>> show(shape)
     """
-    def __init__(self, n=18, anchor=Point(x=0, y=0), s=None, angle=None):
+    def __init__(
+            self,
+            n: int = 18,
+            anchor: Point = Point(x=0, y=0),
+            s: Optional[float] = None,
+            angle: Optional[float] = None) -> None:
         self.n = n
         self.angle = angle if angle is not None else 360/n
         self.anchor = anchor
         self.s = s
 
-    def apply(self, shape):
+    def apply(self, shape: Shape) -> Group:
         shapes = [shape | Rotate(angle=i*self.angle, anchor=self.anchor) for i in range(self.n)]
         if self.s is not None:
             shapes = [shape_ | Scale(sx=self.s**i) for i, shape_ in enumerate(shapes)]
         return Group(shapes)
 
-def show(*shapes):
+def show(*shapes: Shape) -> None:
     """Shows the given shapes.
 
     It also adds a border to the canvas and axis at the origin with
@@ -758,13 +788,13 @@ def show(*shapes):
         Line(start=Point(x=-150, y=0), end=Point(x=150, y=0), stroke="#ddd"),
         Line(start=Point(x=0, y=-150), end=Point(x=0, y=150), stroke="#ddd")
     ]
-    shapes = markers + list(shapes)
-    img = SVG(shapes)
+    shapes_list = markers + list(shapes)
+    img = SVG(shapes_list)
 
     from IPython.display import display
     display(img)
 
-def circle(x=0, y=0, r=100, **kwargs):
+def circle(x: float = 0, y: float = 0, r: float = 100, **kwargs: Attr) -> Circle:
     """Creates a circle with center at (x, y) and radius of r.
 
     Examples:
@@ -786,7 +816,12 @@ def circle(x=0, y=0, r=100, **kwargs):
     """
     return Circle(center=Point(x=x, y=y), radius=r, **kwargs)
 
-def rectangle(x=0, y=0, w=200, h=100, **kwargs):
+def rectangle(
+        x: float = 0,
+        y: float = 0,
+        w: float = 200,
+        h: float = 100,
+        **kwargs: Attr) -> Rectangle:
     """Creates a rectangle with center at (x, y), a width of w and a height of h.
 
     Examples:
@@ -808,7 +843,12 @@ def rectangle(x=0, y=0, w=200, h=100, **kwargs):
     """
     return Rectangle(center=Point(x=x, y=y), width=w, height=h, **kwargs)
 
-def ellipse(x=0, y=0, w=200, h=100, **kwargs):
+def ellipse(
+        x: float = 0,
+        y: float = 0,
+        w: float = 200,
+        h: float = 100,
+        **kwargs: Attr) -> Ellipse:
     """Creates a ellipse with center at (x, y), a width of w and a height of h.
 
     Examples:
@@ -830,7 +870,12 @@ def ellipse(x=0, y=0, w=200, h=100, **kwargs):
     """
     return Ellipse(center=Point(x=x, y=y), width=w, height=h, **kwargs)
 
-def line(x1=None, y1=None, x2=None, y2=None, **kwargs):
+def line(
+        x1: Optional[float] = None,
+        y1: Optional[float] = None,
+        x2: Optional[float] = None,
+        y2: Optional[float] = None,
+        **kwargs: Union[str,float]) -> Line:
     """Creates a line from point (x1, y1) to point (x2, y2).
 
     Examples:
@@ -852,14 +897,15 @@ def line(x1=None, y1=None, x2=None, y2=None, **kwargs):
         if missing:
             raise Exception("missing arguments for line: ", ", ".join(missing))
 
+    assert x1 is not None and y1 is not None and x2 is not None and y2 is not None
     return Line(start=Point(x1, y1), end=Point(x2, y2), **kwargs)
 
-def point(x, y):
+def point(x: float, y: float) -> Point:
     """Creates a Point with x and y coordinates.
     """
     return Point(x, y)
 
-def polygon(points, **kwargs):
+def polygon(points: Sequence[Point], **kwargs: Attr) -> Shape:
     """Creates a polygon with given list points.
 
     Example:
@@ -873,7 +919,7 @@ def polygon(points, **kwargs):
     points_str = " ".join(f"{p.x},{p.y}" for p in points)
     return Shape(tag="polygon", points=points_str, **kwargs)
 
-def polyline(points, **kwargs):
+def polyline(points: Sequence[Point], **kwargs: Attr) -> Shape:
     """Creates a polyline with given list points.
 
     Example:
@@ -888,7 +934,7 @@ def polyline(points, **kwargs):
     points_str = " ".join(f"{p.x},{p.y}" for p in points)
     return Shape(tag="polyline", points=points_str, **kwargs)
 
-def translate(x=0, y=0):
+def translate(x: float = 0, y: float = 0) -> Translate:
     """Translates a shape.
 
     Examples:
@@ -907,7 +953,7 @@ def translate(x=0, y=0):
     """
     return Translate(x=x, y=y)
 
-def scale(s=None, x=1, y=1):
+def scale(s: Optional[float] = None, x: float = 1, y: float = 1) -> Scale:
     """Scales a shape.
 
     Examples:
@@ -933,7 +979,7 @@ def scale(s=None, x=1, y=1):
     else:
         return Scale(sx=x, sy=y)
 
-def rotate(angle):
+def rotate(angle: float) -> Rotate:
     """Rotates a shape.
 
     Examples:
@@ -944,7 +990,7 @@ def rotate(angle):
     """
     return Rotate(angle)
 
-def repeat(n, transformation):
+def repeat(n: int, transformation: Transformation) -> Repeat:
     """Repeats a transformation multiple times on a shape.
 
     Examples:
@@ -955,7 +1001,7 @@ def repeat(n, transformation):
     """
     return Repeat(n, transformation)
 
-def combine(shapes):
+def combine(shapes: List[Shape]) -> Group:
     """The combine function combines a list of shapes into a single shape.
 
     Example:
@@ -965,7 +1011,7 @@ def combine(shapes):
     """
     return Group(shapes)
 
-def color(r, g, b, a=None):
+def color(r: int, g: int, b: int, a: Optional[float] = None) -> str:
     """Creates a color with given r g b values.
 
     Parameters:
@@ -981,7 +1027,7 @@ def color(r, g, b, a=None):
     else:
         return f"rgba({r}, {g}, {b}, {a})"
 
-def random(a=None, b=None):
+def random(a: Optional[float] = None, b: Optional[float] = None, /) -> float:
     """Creates a random number.
 
     The random function can be used in three ways:
@@ -999,10 +1045,11 @@ def random(a=None, b=None):
         >>> random(5, 10)
         7.471950621969087
     """
-    if a is None and b is None:
+    if a is None:
         return random_module.random()
-    elif a is not None and b is None:
+
+    if b is None:
         return a * random_module.random()
-    else:
-        delta = b - a
-        return a + delta * random_module.random()
+
+    delta = b - a
+    return a + delta * random_module.random()
