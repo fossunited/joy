@@ -98,7 +98,7 @@ represented as SVG image by jupyter.
 import html
 import itertools
 import random as random_module
-from typing import Any, Dict, Generator, List, Optional, Sequence, Union
+from typing import Any, Dict, Generator, List, Optional, Sequence, Union, TypeVar
 
 __version__ = "0.2.3"
 __author__ = "Anand Chitipothu <anand@fossunited.org>"
@@ -111,6 +111,7 @@ def shape_sequence() -> Generator[str, None, None]:
 shape_seq = shape_sequence()
 
 Attr = Union[str, float]
+S = TypeVar('S', bound='Shape')
 
 class Shape:
     """Shape is the base class for all shapes in Joy.
@@ -147,7 +148,7 @@ class Shape:
         else:
             raise AttributeError(name)
 
-    def apply_transform(self, transform: Optional['Transformation']) -> 'Shape':
+    def apply_transform(self: S, transform: Optional['Transformation']) -> S:
         if self.transform is not None:
             transform = self.transform | transform
 
@@ -155,8 +156,8 @@ class Shape:
         shape.transform = transform
         return shape
 
-    def clone(self) -> 'Shape':
-        shape: Shape = object.__new__(self.__class__)
+    def clone(self: S) -> S:
+        shape: S = object.__new__(self.__class__)
         shape.__dict__.update(self.__dict__)
         return shape
 
@@ -529,7 +530,7 @@ def render_tag(tag: str, close: bool = False, **attrs: Attr) -> str:
         return f"<{tag}{end}"
 
 class Transformation:
-    def apply(self, shape: Shape) -> 'Shape':
+    def apply(self, shape: Shape) -> Shape:
         return shape.apply_transform(self)
 
     def join(self, transformation: 'Transformation') -> 'TransformationList':
