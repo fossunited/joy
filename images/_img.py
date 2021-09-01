@@ -1,6 +1,6 @@
 from joy import *
 
-def render(*shapes):
+def render(*shapes: Shape) -> None:
     """Renders the shapes as svg and prints them.
     """
     bg = Group([
@@ -9,7 +9,7 @@ def render(*shapes):
         Line(start=Point(y=-150, x=0), end=Point(y=150, x=0), stroke="#ddd"),
     ])
 
-    shape = Group(
+    shape: Shape = Group(
         [bg, *shapes],
         stroke_width=2 # increase the stroke-width to compensate for scaling
     )
