@@ -792,7 +792,7 @@ def show(*shapes: Shape) -> None:
     shapes_list = markers + list(shapes)
     img = SVG(shapes_list)
 
-    from IPython.display import display
+    from IPython.display import display  # type: ignore
     display(img)
 
 def circle(x: float = 0, y: float = 0, r: float = 100, **kwargs: Attr) -> Circle:
