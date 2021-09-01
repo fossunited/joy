@@ -133,10 +133,13 @@ class Shape:
 
 
     def get_reference(self) -> 'Shape':
-        if not "id" in self.attrs:
-            self.attrs["id"] = next(shape_seq)
+        if "id" not in self.attrs:
+            shape_id = next(shape_seq)
+            self.attrs["id"] = shape_id
+        else:
+            shape_id = str(self.attrs["id"])
 
-        attrs = {"xlink:href": "#" + str(self.id)}
+        attrs = {"xlink:href": "#" + shape_id}
         return Shape("use", **attrs)
 
     def __repr__(self) -> str:
