@@ -98,14 +98,18 @@ represented as SVG image by jupyter.
 import html
 import itertools
 import random as random_module
+import string
 
 __version__ = "0.2.3"
 __author__ = "Anand Chitipothu <anand@fossunited.org>"
 
 SQRT2 = 2**0.5
 
+# Random suffix to avoid conflicts between ids of multiple sketches in the same page
+ID_SUFFIX = "".join(random_module.choice(string.ascii_letters+string.digits) for i in range(4))
+
 def shape_sequence():
-    return (f"s-{i}" for i in itertools.count())
+    return (f"s-{i}-{ID_SUFFIX}" for i in itertools.count())
 
 shape_seq = shape_sequence()
 
