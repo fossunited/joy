@@ -1,10 +1,13 @@
 ## Unreleased
 
-* Added new functions combine, color and random
-* Added polygon shape
-* Added as_dict method to Shape to be able to serialize the shapes to JSON
+## Version 0.3.0 - 2021-10-11
+
+* Improved the repeat tranformation and fixed a couple of bugs that were introduced due to these improvements
+* Added new functions `combine`, `color` and `random`
+* Added `polyline` shape (tx @abhinavxd)
+* Added `polygon` shape
+* Added `as_dict` method to Shape to be able to serialize the shapes to JSON
 * Added lowercase function names for transformations.
-* Improved the repeat tranformation
 * Fixed the issues with `line` function
 
 ## Version 0.2.3 - 2021-06-19

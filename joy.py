@@ -100,7 +100,7 @@ import itertools
 import random as random_module
 import string
 
-__version__ = "0.2.3"
+__version__ = "0.3.0"
 __author__ = "Anand Chitipothu <anand@fossunited.org>"
 
 SQRT2 = 2**0.5
