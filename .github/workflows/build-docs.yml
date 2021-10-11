@@ -1,0 +1,40 @@
+name: Build Docs
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: install dependencies
+      run: |
+        python -m pip install -U pip
+        python -m pip install -r dev-requirements.txt
+    - name: build docs
+      run: mkdocs build
+    - name: add the docs to gh-pages and push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git config --global user.name "${GITHUB_ACTOR}"
+        git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+
+        docroot=`mktemp -d`
+        rsync -av "site/" "${docroot}/"
+
+        cd "${docroot}"
+        git init
+        git remote add origin "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+        git checkout -b gh-pages
+        touch .nojekyll
+        git add .
+
+        msg="Updating docs for commit ${GITHUB_SHA}"
+        git commit -am "${msg}"
+        git push origin gh-pages --force
