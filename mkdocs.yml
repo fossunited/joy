@@ -1,0 +1,9 @@
+site_name: Joy
+theme:
+  name: material
+
+nav:
+  - index.md
+  - reference.md
+
+repo_url: https://github.com/fossunited/joy
