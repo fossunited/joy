@@ -13,6 +13,14 @@ import re
 import yaml
 from pathlib import Path
 
+@pytest.fixture()
+def reset_joy():
+    import joy
+    # reset id_suffix and shape counter
+    joy.ID_SUFFIX = "0000"
+    joy.shape_seq = joy.shape_sequence()
+    yield
+
 def test_render_tag():
     assert render_tag("circle") == "<circle>"
     assert render_tag("circle", cx=0, cy=0, r=10) == '<circle cx="0" cy="0" r="10">'
@@ -41,7 +49,7 @@ testdata = read_tests_files()
 test_ids = [t['name'] for t in testdata]
 
 @pytest.mark.parametrize('testspec', testdata, ids=test_ids)
-def test_shapes(testspec):
+def test_shapes(testspec, reset_joy):
     code = testspec['code']
     expected = testspec['expected']
 
@@ -57,4 +65,4 @@ def test_shapes(testspec):
     assert expected == svg
 
 def normalize_space(text):
-    return re.sub("\s+", " ", text).strip()
+    return re.sub(r"\s+", " ", text).strip()

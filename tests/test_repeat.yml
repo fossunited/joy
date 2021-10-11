@@ -3,19 +3,37 @@ code: |
   Line() | Repeat(4, Rotate(angle=45))
 expected: |
   <g>
-    <line x1="-100" y1="0" x2="100" y2="0" />
-    <line x1="-100" y1="0" x2="100" y2="0" transform="rotate(45)" />
-    <line x1="-100" y1="0" x2="100" y2="0" transform="rotate(45) rotate(45)" />
-    <line x1="-100" y1="0" x2="100" y2="0" transform="rotate(45) rotate(45) rotate(45)" />
+    <defs>
+      <line x1="-100" y1="0" x2="100" y2="0" id="s-0-0000" />
+    </defs>
+    <g>
+      <use xlink:href="#s-0-0000" />
+      <g transform="rotate(45)">
+        <use xlink:href="#s-0-0000" />
+        <g transform="rotate(45)">
+          <use xlink:href="#s-0-0000" />
+          <use xlink:href="#s-0-0000" transform="rotate(45)" />
+        </g>
+      </g>
+    </g>
   </g>
 ---
 name: test repeat with rotate|scale on line
 code: |
-  Line() | Repeat(4, Rotate(angle=45) | Scale(sx=0.9))
+  line() | repeat(4, rotate(angle=45) | scale(x=0.9))
 expected: |
   <g>
-    <line x1="-100" y1="0" x2="100" y2="0" />
-    <line x1="-100" y1="0" x2="100" y2="0" transform="rotate(45) scale(0.9 0.9)" />
-    <line x1="-100" y1="0" x2="100" y2="0" transform="rotate(45) scale(0.9 0.9) rotate(45) scale(0.9 0.9)" />
-    <line x1="-100" y1="0" x2="100" y2="0" transform="rotate(45) scale(0.9 0.9) rotate(45) scale(0.9 0.9) rotate(45) scale(0.9 0.9)" />
+    <defs>
+      <line x1="-100" y1="0" x2="100" y2="0" id="s-0-0000" />
+    </defs>
+    <g>
+      <use xlink:href="#s-0-0000" />
+      <g transform="scale(0.9 1) rotate(45)">
+        <use xlink:href="#s-0-0000" />
+        <g transform="scale(0.9 1) rotate(45)">
+          <use xlink:href="#s-0-0000" />
+          <use xlink:href="#s-0-0000" transform="scale(0.9 1) rotate(45)" />
+        </g>
+      </g>
+    </g>
   </g>
