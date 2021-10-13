@@ -627,18 +627,28 @@ class Scale(Transformation):
 
 
 class Skew(Transformation):
-    def __init__(self , sx=0 , sy=0) -> None:
-        if sy is None:
-            sy = sx
-        self.sx = sx
-        self.sy = sy
+    """Creates a new scale transformation.
+
+    Parameters:
+        x:
+            The Skew factor in the x direction.
+
+        y:
+            The Skew factor in the y direction. Defaults to
+            the value of x if not provided.
+    """
+    def __init__(self , x=0 , y=0):
+        if y is None:
+            y = x
+        self.x = x
+        self.y = y
 
     def as_str(self):
         str = ""
-        if self.sy is None:
-            str = f"skewX({self.sx})"
+        if self.y is None:
+            str = f"skewX({self.x})"
         else:
-            str = f"skewX({self.sx}) skewY{self.sy})"
+            str = f"skewX({self.x}) skewY({self.y})"
 
 
 
