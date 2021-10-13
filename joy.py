@@ -625,6 +625,24 @@ class Scale(Transformation):
     def as_str(self):
         return f"scale({self.sx} {self.sy})"
 
+
+class Skew(Transformation):
+    def __init__(self , sx=0 , sy=0) -> None:
+        if sy is None:
+            sy = sx
+        self.sx = sx
+        self.sy = sy
+
+    def as_str(self):
+        str = ""
+        if self.sy is None:
+            str = f"skewX({self.sx})"
+        else:
+            str = f"skewX({self.sx}) skewY{self.sy})"
+
+
+
+
 class Repeat(Transformation):
     """Repeat is a higher-order transformation that repeats a
     transformation multiple times.
@@ -1010,3 +1028,5 @@ def random(a=None, b=None):
     else:
         delta = b - a
         return a + delta * random_module.random()
+
+
