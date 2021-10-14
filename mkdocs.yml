@@ -4,6 +4,7 @@ theme:
 
 nav:
   - index.md
+  - getting-started.md
   - reference.md
 
 repo_url: https://github.com/fossunited/joy
