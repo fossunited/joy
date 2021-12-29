@@ -6,7 +6,7 @@ To run tests:
 """
 from joy import (
     render_tag,
-    Point,
+    Point, Shape,
     Translate,  Rotate)
 import pytest
 import re
@@ -20,6 +20,14 @@ def reset_joy():
     joy.ID_SUFFIX = "0000"
     joy.shape_seq = joy.shape_sequence()
     yield
+
+def test_clone():
+    node = Shape("circle", x=0, y=0, r=10)
+
+    # attrs should not be shared after clone
+    node2 = node.clone()
+    node2.attrs['x'] = 20
+    assert node.x == 0
 
 def test_render_tag():
     assert render_tag("circle") == "<circle>"
