@@ -1,4 +1,7 @@
-## Unreleased
+## Unreleased\
+
+## Version 0.3.1 - 2021-12-29
+* Fixed inconsistencies in rendering caused due to a bug in cloning the node (#34)
 
 ## Version 0.3.0 - 2021-10-11
 
