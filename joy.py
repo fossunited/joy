@@ -156,6 +156,11 @@ class Shape:
     def clone(self):
         shape = object.__new__(self.__class__)
         shape.__dict__.update(self.__dict__)
+
+        # don't share attrs on clone
+        # also remove the id as the new nodes gets a new id
+        shape.attrs = dict(self.attrs)
+        shape.attrs.pop("id", None)
         return shape
 
     def get_attrs(self):
