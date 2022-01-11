@@ -630,6 +630,34 @@ class Scale(Transformation):
     def as_str(self):
         return f"scale({self.sx} {self.sy})"
 
+
+class Skew(Transformation):
+    """Creates a new scale transformation.
+
+    Parameters:
+        x:
+            The Skew factor in the x direction.
+
+        y:
+            The Skew factor in the y direction. Defaults to
+            the value of x if not provided.
+    """
+    def __init__(self , x=0 , y=0):
+        if y is None:
+            y = x
+        self.x = x
+        self.y = y
+
+    def as_str(self):
+        str = ""
+        if self.y is None:
+            str = f"skewX({self.x})"
+        else:
+            str = f"skewX({self.x}) skewY({self.y})"
+
+
+
+
 class Repeat(Transformation):
     """Repeat is a higher-order transformation that repeats a
     transformation multiple times.
@@ -1015,3 +1043,5 @@ def random(a=None, b=None):
     else:
         delta = b - a
         return a + delta * random_module.random()
+
+
