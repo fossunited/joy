@@ -105,7 +105,7 @@ show(r1, r2)
 ```
 ![svg](images/rect-rotate.svg)
 
-## Higer-Order Transformations
+## Higher-Order Transformations
 
 Joy supports higher-order transformation `repeat`.
 
