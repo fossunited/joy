@@ -116,7 +116,7 @@ For example, draw 10 circles:
 
 ```
 c = circle(x=-100, y=0, r=50)
-shape = c | Repeat(10, Translate(x=10, y=0)
+shape = c | repeat(10, translate(x=10, y=0)
 show(shape)
 ```
 

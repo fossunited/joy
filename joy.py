@@ -249,8 +249,7 @@ class SVG:
         svg_header = render_tag(**attrs)+ "\n"
         svg_footer = "</svg>\n"
 
-        # flip the y axis so that y grows upwards
-        node = Group(self.nodes) | Scale(sx=1, sy=-1)
+        node = Group(self.nodes)
 
         return svg_header + node._svg() + svg_footer
 
@@ -793,7 +792,7 @@ def circle(x=0, y=0, r=100, **kwargs):
         c = circle(x=10, y=20, r=50)
         show(c)
     """
-    return Circle(center=Point(x=x, y=y), radius=r, **kwargs)
+    return Circle(center=Point(x=x, y=-y), radius=r, **kwargs)
 
 def rectangle(x=0, y=0, w=200, h=100, **kwargs):
     """Creates a rectangle with center at (x, y), a width of w and a height of h.
@@ -815,7 +814,7 @@ def rectangle(x=0, y=0, w=200, h=100, **kwargs):
         r = rectangle(x=10, y=20, w=100, h=50)
         show(r)
     """
-    return Rectangle(center=Point(x=x, y=y), width=w, height=h, **kwargs)
+    return Rectangle(center=Point(x=x, y=-y), width=w, height=h, **kwargs)
 
 def ellipse(x=0, y=0, w=200, h=100, **kwargs):
     """Creates an ellipse with center at (x, y), a width of w and a height of h.
@@ -837,7 +836,7 @@ def ellipse(x=0, y=0, w=200, h=100, **kwargs):
         r = ellipse(x=10, y=20, w=100, h=50)
         show(r)
     """
-    return Ellipse(center=Point(x=x, y=y), width=w, height=h, **kwargs)
+    return Ellipse(center=Point(x=x, y=-y), width=w, height=h, **kwargs)
 
 def line(x1=None, y1=None, x2=None, y2=None, **kwargs):
     """Creates a line from point (x1, y1) to point (x2, y2).
@@ -856,7 +855,7 @@ def line(x1=None, y1=None, x2=None, y2=None, **kwargs):
         x1, y1 = -100, 0
         x2, y2 = 100, 0
     else:
-        pairs = dict(x1=x1, y1=y1, x2=x2, y2=y2)
+        pairs = dict(x1=x1, y1=-y1, x2=x2, y2=-y2)
         missing = [name for name, value in pairs.items() if value is None]
         if missing:
             raise Exception("missing arguments for line: ", ", ".join(missing))
@@ -866,7 +865,7 @@ def line(x1=None, y1=None, x2=None, y2=None, **kwargs):
 def point(x, y):
     """Creates a Point with x and y coordinates.
     """
-    return Point(x, y)
+    return Point(x, -y)
 
 def polygon(points, **kwargs):
     """Creates a polygon with given list points.
@@ -879,7 +878,7 @@ def polygon(points, **kwargs):
         triangle = polygon([p1, p2, p3])
         show(triangle)
     """
-    points_str = " ".join(f"{p.x},{p.y}" for p in points)
+    points_str = " ".join(f"{p.x},{-p.y}" for p in points)
     return Shape(tag="polygon", points=points_str, **kwargs)
 
 def polyline(points, **kwargs):
@@ -894,7 +893,7 @@ def polyline(points, **kwargs):
         line = polyline([p1, p2, p3, p4])
         show(line)
     """
-    points_str = " ".join(f"{p.x},{p.y}" for p in points)
+    points_str = " ".join(f"{p.x},{-p.y}" for p in points)
     return Shape(tag="polyline", points=points_str, **kwargs)
 
 def translate(x=0, y=0):
@@ -914,7 +913,7 @@ def translate(x=0, y=0):
 
         shape = circle() | translate(x=10, y=20)
     """
-    return Translate(x=x, y=y)
+    return Translate(x=x, y=-y)
 
 def scale(s=None, x=1, y=1):
     """Scales a shape.
