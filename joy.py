@@ -489,6 +489,61 @@ class Group(Shape):
     def __init__(self, shapes, **kwargs):
         super().__init__("g", children=shapes, **kwargs)
 
+class Text(Shape):
+    """Creates a text node.
+
+    Parameters:
+        position:
+            The position of the text node.
+            Defaults to (0, 0) when not specified from the lower
+            left corner.
+
+    Examples:
+
+    Draw a text node:
+
+        >>> t = text("Hello!")
+        >>> show(t)
+
+    Draw a text node centered at (50, 50).
+
+        >>> t = text("Hello!", center=Point(x=100, y=100), alignment_baseline="middle", text_anchor="middle")
+        >>> show(t)
+    """
+    def __init__(self, content, anchor=Point(0, 0), **kwargs):
+        self.anchor = anchor
+        # self.width = needs to be determined dynamically
+        # self.height = needs to be determined dynamically
+
+        cx, cy = self.anchor.x, self.anchor.y
+        x = cx 
+        y = cy 
+        super().__init__(
+            tag="text",
+            children=[Content(content)],
+            x=x,
+            y=y,
+            **kwargs)
+
+class Content():
+    """Content is the holds actual character data for a text node. 
+
+    This uses a minimal subset of the Shape interface but cannot be used alone.
+    """
+    def __init__(self, content, **attrs):
+        """Creates a new character data object.
+        """
+        self.content = content
+
+    def _svg(self, indent="") -> str:
+        """Returns the svg representation of this node.
+
+        As this object is a leaf and does not have children we only
+        return its content directly. 
+        """
+        return self.content
+
+
 def render_tag(tag, *, close=False, **attrs):
     """Renders a html/svg tag.
 
@@ -895,6 +950,25 @@ def polyline(points, **kwargs):
     """
     points_str = " ".join(f"{p.x},{-p.y}" for p in points)
     return Shape(tag="polyline", points=points_str, **kwargs)
+
+def text(content, x=0, y=0, fill="black", **kwargs):
+    """Creates a text node using the given content with anchor point at (x, y).
+
+    Examples:
+
+    Draw a text node.
+
+        t = text("Hello!")
+        show(t)
+
+    Draw a text node centered at (0, 0) with specific font features.
+        t = text("Hello!", x=0, y=0, font_family="Arial", 
+                 font_size="20", fill="black", 
+                 alignment_baseline="middle", text_anchor="left")
+        show(t)
+
+    """
+    return Text(content, anchor=Point(x=x, y=-y), **kwargs)
 
 def translate(x=0, y=0):
     """Translates a shape.
