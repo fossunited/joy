@@ -105,7 +105,7 @@ show(r1, r2)
 ```
 ![svg](images/rect-rotate.svg)
 
-## Higer-Order Transformations
+## Higher-Order Transformations
 
 Joy supports higher-order transformation `repeat`.
 
@@ -176,7 +176,7 @@ See [tutorial.ipynb](tutorial.ipynb).
 
 ## Acknowledgements
 
-Special thanks to Amit Kapoor (@amitkaps). This library woundn't have
+Special thanks to Amit Kapoor (@amitkaps). This library wouldn't have
 been possible without his inputs.
 
 The long discussions between @anandology and @amitkaps on functional
